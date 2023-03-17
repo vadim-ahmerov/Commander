@@ -23,7 +23,7 @@
 --patternlet inline # hoistPatternLet
 --redundanttype inferred # redundantType
 --maxwidth 130 # wrap
---header "{file}\nCopyright (c) {year} Vadim Ahmerov\nCreated on {created}."
+--header "{file}\nCopyright (c) {year} Vadim Ahmerov"
 --varattributes same-line
 --funcattributes prev-line
 

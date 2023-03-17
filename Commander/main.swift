@@ -1,6 +1,5 @@
 // main.swift
 // Copyright (c) 2023 Vadim Ahmerov
-// Created on 15.07.2022.
 
 import AppKit
 

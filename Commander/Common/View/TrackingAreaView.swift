@@ -1,6 +1,5 @@
 // TrackingAreaView.swift
 // Copyright (c) 2023 Vadim Ahmerov
-// Created on 09.11.2022.
 
 import SwiftUI
 

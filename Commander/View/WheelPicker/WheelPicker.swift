@@ -1,6 +1,5 @@
 // WheelPicker.swift
 // Copyright (c) 2023 Vadim Ahmerov
-// Created on 24.02.2023.
 
 import Combine
 import Foundation

@@ -1,6 +1,5 @@
 // AppDelegate.swift
 // Copyright (c) 2023 Vadim Ahmerov
-// Created on 29.07.2022.
 
 import Combine
 import ServiceManagement
@@ -29,7 +28,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         diContainer.shortcutNotifier.$shortcutTriggered.sink { [weak self] isTriggered in
             self?.shortcutStateUpdated(isTriggered: isTriggered)
         }.store(in: &cancellables)
-        openPreferencesIfNeeded()
+        openSettingsIfNeeded()
 
         configureAutoLaunch()
     }
@@ -92,14 +91,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         statusBarItem.menu = NSMenu(title: "Menu")
 
         let quitItem = NSMenuItem(title: "Quit", action: #selector(quit), keyEquivalent: "q")
-        let preferencesItem = NSMenuItem(title: "Settings", action: #selector(openSettings), keyEquivalent: ",")
+        let settingsItem = NSMenuItem(title: "Settings", action: #selector(openSettings), keyEquivalent: ",")
         let aboutItem = NSMenuItem(title: "About", action: #selector(openAbout), keyEquivalent: "")
 
         let requestFeatureItem = NSMenuItem(title: "Request a Feature", action: #selector(requestFeature), keyEquivalent: "")
         let reportBugItem = NSMenuItem(title: "Report a Bug", action: #selector(reportBug), keyEquivalent: "")
         let contactUsItem = NSMenuItem(title: "Contact us", action: #selector(contactUs), keyEquivalent: "")
 
-        [preferencesItem, .separator(), requestFeatureItem, reportBugItem, contactUsItem, .separator(), aboutItem, quitItem]
+        [settingsItem, .separator(), requestFeatureItem, reportBugItem, contactUsItem, .separator(), aboutItem, quitItem]
             .forEach {
                 statusBarItem.menu?.addItem($0)
             }
@@ -114,10 +113,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private static func makeSettingsWindow(diContainer: DIContainer) -> NSWindow {
         let controller = NSHostingController(
-            rootView: PreferencesView().environment(\.injected, diContainer)
+            rootView: SettingsView().environment(\.injected, diContainer)
         )
         let window = NSWindow(contentViewController: controller)
-        window.title = "Preferences"
+        window.title = "Settings"
         window.titlebarAppearsTransparent = true
         window.styleMask = [
             .unifiedTitleAndToolbar,
@@ -148,7 +147,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
-    private func openPreferencesIfNeeded() {
+    private func openSettingsIfNeeded() {
         guard firstLaunch else {
             return
         }
@@ -206,6 +205,7 @@ extension AppDelegate {
 
     @objc
     private func openSettings() {
+        diContainer.appsManager.updateApps()
         settingsWindow.makeKeyAndOrderFront(nil)
         settingsWindow.orderFrontRegardless()
         NSApp.activate(ignoringOtherApps: true)

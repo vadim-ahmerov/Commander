@@ -1,8 +1,7 @@
 // App.swift
 // Copyright (c) 2023 Vadim Ahmerov
-// Created on 28.07.2022.
 
-import AppKit.NSImage
+import Foundation
 
 // MARK: - App
 
@@ -16,5 +15,21 @@ struct App: Codable, Equatable, Hashable {
 extension App: Identifiable {
     var id: URL {
         url
+    }
+}
+
+extension App {
+    enum Kind {
+        case shortcut
+        case general
+    }
+
+    var kind: Kind {
+        switch url.scheme {
+        case "shortcuts":
+            return .shortcut
+        default:
+            return .general
+        }
     }
 }

@@ -1,10 +1,9 @@
 // URLSheetView.swift
 // Copyright (c) 2023 Vadim Ahmerov
-// Created on 28.07.2022.
 
 import SwiftUI
 
-extension PreferencesView {
+extension SettingsView {
     struct URLSheetView: View {
         // MARK: Internal
 

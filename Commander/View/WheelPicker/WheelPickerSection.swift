@@ -1,6 +1,5 @@
 // WheelPickerSection.swift
 // Copyright (c) 2023 Vadim Ahmerov
-// Created on 24.02.2023.
 
 import SwiftUI
 
@@ -28,9 +27,7 @@ extension WheelPicker {
 
 
             ZStack {
-                Image(nsImage: diContainer.imageProvider.image(for: indexedApp.app.url))
-                    .resizable()
-                    .frame(width: 64, height: 64)
+                diContainer.imageProvider.image(for: indexedApp.app, preferredSize: 64)
                     .scaleEffect(imageScale)
                     .background(
                         Color.clear.contentShape(Circle()).frame(width: 90, height: 90)
@@ -145,14 +142,14 @@ extension WheelPicker {
             }
         }
 
-        @ViewBuilder  private var sectionBackground: some View {
-            if hoverState.isEnabled && isHovering {
+        @ViewBuilder private var sectionBackground: some View {
+            if hoverState.isEnabled, isHovering {
                 VisualEffectView(material: .selection, blendingMode: .behindWindow)
                     .clipShape(sectionPath)
             }
         }
 
-        @ViewBuilder  private var runningDotView: some View {
+        @ViewBuilder private var runningDotView: some View {
             if diContainer.appsManager.isLaunched(app: indexedApp.app), !isHovering {
                 Circle()
                     .fill(Color(nsColor: NSColor.tertiaryLabelColor))

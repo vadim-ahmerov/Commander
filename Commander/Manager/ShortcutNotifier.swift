@@ -1,6 +1,5 @@
 // ShortcutNotifier.swift
 // Copyright (c) 2023 Vadim Ahmerov
-// Created on 26.02.2023.
 
 import AppKit
 import SwiftUI

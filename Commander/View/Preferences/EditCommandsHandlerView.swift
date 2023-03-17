@@ -1,6 +1,5 @@
 // EditCommandsHandlerView.swift
 // Copyright (c) 2023 Vadim Ahmerov
-// Created on 01.08.2022.
 
 import SwiftUI
 

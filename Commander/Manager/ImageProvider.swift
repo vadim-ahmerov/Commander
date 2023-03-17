@@ -1,12 +1,38 @@
 // ImageProvider.swift
 // Copyright (c) 2023 Vadim Ahmerov
-// Created on 28.07.2022.
 
 import AppKit
 import Foundation
+import SwiftUI
 
 final class ImageProvider {
-    func image(for url: URL, preferredSize: CGFloat = 64) -> NSImage {
+    // MARK: Internal
+
+    @ViewBuilder
+    func image(for app: App, preferredSize: CGFloat) -> some View {
+        switch app.kind {
+        case .shortcut:
+            ZStack {
+                Image("shortcut")
+                    .resizable()
+                    .frame(width: preferredSize, height: preferredSize)
+                if let firstLetter = app.name.first {
+                    Text(String(firstLetter))
+                        .font(.system(size: preferredSize * 0.8, weight: .medium, design: .rounded))
+                        .foregroundColor(.white)
+                        .opacity(0.8)
+                }
+            }
+        case .general:
+            Image(nsImage: nsImage(for: app.url, preferredSize: preferredSize))
+                .resizable()
+                .frame(width: preferredSize, height: preferredSize)
+        }
+    }
+
+    // MARK: Private
+
+    private func nsImage(for url: URL, preferredSize: CGFloat) -> NSImage {
         let nsImage: NSImage
         let imageRepresentation = NSWorkspace.shared
             .icon(forFile: url.path)

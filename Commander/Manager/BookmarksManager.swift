@@ -1,6 +1,5 @@
 // BookmarksManager.swift
 // Copyright (c) 2023 Vadim Ahmerov
-// Created on 28.07.2022.
 
 import Foundation
 

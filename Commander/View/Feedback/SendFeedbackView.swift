@@ -1,6 +1,5 @@
 // SendFeedbackView.swift
 // Copyright (c) 2023 Vadim Ahmerov
-// Created on 19.02.2023.
 
 import Combine
 import SwiftUI

@@ -1,6 +1,5 @@
 // Sequence+Extension.swift
 // Copyright (c) 2023 Vadim Ahmerov
-// Created on 19.07.2022.
 
 import Foundation
 

@@ -1,6 +1,5 @@
 // AppsManager.swift
 // Copyright (c) 2023 Vadim Ahmerov
-// Created on 24.02.2023.
 
 import AppKit
 import Combine
@@ -24,9 +23,18 @@ final class AppsManager {
     let apps = CurrentValueSubject<[App], Never>([])
     let allApps = CurrentValueSubject<AppSearcher.SearchResult, Never>(.empty)
 
-    func open(url: URL) {
-        DispatchQueue.global(qos: .userInitiated).async {
-            NSWorkspace.shared.open(url)
+    func updateApps() {
+        allApps.send(searcher.search())
+    }
+
+    func open(app: App) {
+        DispatchQueue.global(qos: .userInitiated).async { [self] in
+            switch app.kind {
+            case .shortcut:
+                searcher.shortcutsAppManager.run(app: app)
+            case .general:
+                NSWorkspace.shared.open(app.url)
+            }
         }
     }
 

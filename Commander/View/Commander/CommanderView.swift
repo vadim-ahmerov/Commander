@@ -1,6 +1,5 @@
 // CommanderView.swift
 // Copyright (c) 2023 Vadim Ahmerov
-// Created on 24.02.2023.
 
 import AppKit
 import Combine
@@ -26,11 +25,11 @@ struct CommanderView: View {
 
                 clearHoverSubject.send(())
                 if
-                    let appURL = lastHoveredApp?.url,
+                    let app = lastHoveredApp,
                     let keyDownDate = shortcutTriggerDate,
                     -keyDownDate.timeIntervalSinceNow > 0.2
                 {
-                    self.diContainer.appsManager.open(url: appURL)
+                    self.diContainer.appsManager.open(app: app)
                     self.shortcutTriggerDate = nil
                 }
             }

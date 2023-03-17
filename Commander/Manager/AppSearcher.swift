@@ -1,6 +1,5 @@
 // AppSearcher.swift
 // Copyright (c) 2023 Vadim Ahmerov
-// Created on 28.07.2022.
 
 import AppKit
 import ApplicationServices
@@ -10,16 +9,15 @@ final class AppSearcher {
     // MARK: Internal
 
     struct SearchResult {
+        let shortcuts: [App]
         let localApps: [App]
         let systemApps: [App]
         let utilities: [App]
 
-        static let empty = Self(localApps: [], systemApps: [], utilities: [])
-
-        var joined: [App] {
-            localApps + systemApps + utilities
-        }
+        static let empty = Self(shortcuts: [], localApps: [], systemApps: [], utilities: [])
     }
+
+    let shortcutsAppManager = ShortcutsAppManager()
 
     func search() -> SearchResult {
         let localAppsURLs = readApplications(directory: .applicationDirectory, domain: .localDomainMask)
@@ -30,6 +28,7 @@ final class AppSearcher {
             subpath: "/Utilities"
         )
         return SearchResult(
+            shortcuts: shortcutsAppManager.getShortcuts(),
             localApps: apps(at: localAppsURLs),
             systemApps: apps(at: systemAppsURLs),
             utilities: apps(at: utilitiesURLs)

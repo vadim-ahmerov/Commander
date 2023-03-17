@@ -1,13 +1,12 @@
-// PreferencesView.swift
+// SettingsView.swift
 // Copyright (c) 2023 Vadim Ahmerov
-// Created on 24.02.2023.
 
 import AppKit
 import SwiftUI
 
-// MARK: - PreferencesView
+// MARK: - SettingsView
 
-struct PreferencesView: View {
+struct SettingsView: View {
     // MARK: Internal
 
     @UserDefault("first preferences launch") var firstLaunch = true
@@ -32,7 +31,15 @@ struct PreferencesView: View {
             diContainer.appsManager.apps.value.append(App(url: url, name: url.host ?? url.lastPathComponent))
         }.sheet(isPresented: $urlSheetIsShowing) {
             URLSheetView(isVisible: $urlSheetIsShowing, enteredURL: $enteredURL)
-        }.frame(minWidth: Self.width, maxWidth: Self.width).onAppear {
+        }.alert("App Limit Reached", isPresented: $maxAppsCountSheetIsShowing, actions: {
+            Button("Ok") {
+                maxAppsCountSheetIsShowing = false
+            }
+        }, message: {
+            Text(
+                "You have reached the maximum of \(Self.maxAppsCount) apps. Please remove an existing app before adding a new one."
+            )
+        }).frame(minWidth: Self.width, maxWidth: Self.width).onAppear {
             showGreeting = firstLaunch
             firstLaunch = false
         }
@@ -43,6 +50,7 @@ struct PreferencesView: View {
     private static let width: CGFloat = 800
     private static let wheelWidth: CGFloat = 500
     private static let height: CGFloat = 500
+    private static let maxAppsCount = 12
 
     @Environment(\.injected) private var diContainer: DIContainer
 
@@ -51,6 +59,7 @@ struct PreferencesView: View {
     @State private var allApps = AppSearcher.SearchResult.empty
     @State private var urlSheetIsShowing = false
     @State private var enteredURL: URL?
+    @State private var maxAppsCountSheetIsShowing = false
 
     private var wheelPicker: some View {
         VStack(spacing: 20) {
@@ -82,6 +91,9 @@ struct PreferencesView: View {
                 }).font(.body)
             }
             makeSection(title: "Added to launcher", apps: diContainer.appsManager.apps.value).transition(.move(edge: .trailing))
+            if !allApps.shortcuts.isEmpty {
+                makeSection(title: "Shortcuts", apps: allApps.shortcuts)
+            }
             if !allApps.localApps.isEmpty {
                 makeSection(title: "Apps installed by you", apps: allApps.localApps)
             }
@@ -108,7 +120,11 @@ struct PreferencesView: View {
     }
 
     private var maxAppsCountNotReached: Bool {
-        apps.count < 10
+        !maxAppsCountReached
+    }
+
+    private var maxAppsCountReached: Bool {
+        apps.count >= Self.maxAppsCount
     }
 
     private func makeSection(title: String, apps: [App]) -> some View {
@@ -116,7 +132,9 @@ struct PreferencesView: View {
             ForEach(apps) { app in
                 ZStack {
                     Toggle(isOn: Binding(get: { self.apps.contains(app) }, set: { enable in
-                        if !self.apps.contains(app), enable, maxAppsCountNotReached {
+                        if maxAppsCountReached, enable {
+                            maxAppsCountSheetIsShowing = true
+                        } else if !self.apps.contains(app), enable {
                             self.diContainer.appsManager.apps.value.append(app)
                         } else {
                             self.diContainer.appsManager.apps.value.removeAll(where: { $0 == app })
@@ -125,7 +143,9 @@ struct PreferencesView: View {
                         Label {
                             Text(app.name).font(.body)
                         } icon: {
-                            Image(nsImage: diContainer.imageProvider.image(for: app.url, preferredSize: 32))
+                            ZStack {
+                                diContainer.imageProvider.image(for: app, preferredSize: 32)
+                            }
                         }.labelStyle(.titleAndIcon).padding([.leading, .trailing], 4)
                     }.frame(maxWidth: .infinity, alignment: .leading)
                 }
@@ -135,6 +155,7 @@ struct PreferencesView: View {
 
     private func addNewFileOrFolder() {
         guard maxAppsCountNotReached else {
+            maxAppsCountSheetIsShowing = true
             return
         }
         let panel = NSOpenPanel()
@@ -149,6 +170,7 @@ struct PreferencesView: View {
 
     private func addURL() {
         guard maxAppsCountNotReached else {
+            maxAppsCountSheetIsShowing = true
             return
         }
         urlSheetIsShowing = true

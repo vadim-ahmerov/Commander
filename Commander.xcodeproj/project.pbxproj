@@ -32,11 +32,12 @@
 		7FAD55CC2889D8DC009A4020 /* URLSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FAD55CB2889D8DC009A4020 /* URLSheetView.swift */; };
 		7FAD55CE2889EB16009A4020 /* EditCommandsHandlerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FAD55CD2889EB16009A4020 /* EditCommandsHandlerView.swift */; };
 		7FBDF3FF2880953C00173B7B /* ShortcutNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDF3FE2880953C00173B7B /* ShortcutNotifier.swift */; };
+		7FC3E32129C4E9CB008EFC1B /* ShortcutsAppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC3E32029C4E9CB008EFC1B /* ShortcutsAppManager.swift */; };
 		7FD345AD28803DEE00DDD1D5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD345AC28803DEE00DDD1D5 /* AppDelegate.swift */; };
 		7FD345AF28803DEE00DDD1D5 /* CommanderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD345AE28803DEE00DDD1D5 /* CommanderView.swift */; };
 		7FD345B128803DEF00DDD1D5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7FD345B028803DEF00DDD1D5 /* Assets.xcassets */; };
 		7FF08B082881E636000ED2AD /* NSWindow+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF08B072881E636000ED2AD /* NSWindow+Extension.swift */; };
-		7FF08B0B2881E6DD000ED2AD /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF08B0A2881E6DD000ED2AD /* PreferencesView.swift */; };
+		7FF08B0B2881E6DD000ED2AD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF08B0A2881E6DD000ED2AD /* SettingsView.swift */; };
 		7FF08B0E288544AC000ED2AD /* AppsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF08B0D288544AB000ED2AD /* AppsManager.swift */; };
 		7FF08B10288544E0000ED2AD /* DIContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF08B0F288544E0000ED2AD /* DIContainer.swift */; };
 		7FF08B1728854FE4000ED2AD /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FF08B1628854FE4000ED2AD /* App.swift */; };
@@ -123,6 +124,7 @@
 		7FAD55CB2889D8DC009A4020 /* URLSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSheetView.swift; sourceTree = "<group>"; };
 		7FAD55CD2889EB16009A4020 /* EditCommandsHandlerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCommandsHandlerView.swift; sourceTree = "<group>"; };
 		7FBDF3FE2880953C00173B7B /* ShortcutNotifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutNotifier.swift; sourceTree = "<group>"; };
+		7FC3E32029C4E9CB008EFC1B /* ShortcutsAppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsAppManager.swift; sourceTree = "<group>"; };
 		7FD345A928803DEE00DDD1D5 /* Commander.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Commander.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7FD345AC28803DEE00DDD1D5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7FD345AE28803DEE00DDD1D5 /* CommanderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommanderView.swift; sourceTree = "<group>"; };
@@ -130,7 +132,7 @@
 		7FD345B528803DEF00DDD1D5 /* Commander.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Commander.entitlements; sourceTree = "<group>"; };
 		7FD345BB28804D8F00DDD1D5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		7FF08B072881E636000ED2AD /* NSWindow+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSWindow+Extension.swift"; sourceTree = "<group>"; };
-		7FF08B0A2881E6DD000ED2AD /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
+		7FF08B0A2881E6DD000ED2AD /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		7FF08B0D288544AB000ED2AD /* AppsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsManager.swift; sourceTree = "<group>"; };
 		7FF08B0F288544E0000ED2AD /* DIContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DIContainer.swift; sourceTree = "<group>"; };
 		7FF08B1628854FE4000ED2AD /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 				7FAD55C8288956E2009A4020 /* BookmarksManager.swift */,
 				7F8D9795289167690018AA2A /* AppSearcher.swift */,
 				7F8D979928916EBB0018AA2A /* ImageProvider.swift */,
+				7FC3E32029C4E9CB008EFC1B /* ShortcutsAppManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -306,7 +309,7 @@
 		7FF08B1828855FFB000ED2AD /* Preferences */ = {
 			isa = PBXGroup;
 			children = (
-				7FF08B0A2881E6DD000ED2AD /* PreferencesView.swift */,
+				7FF08B0A2881E6DD000ED2AD /* SettingsView.swift */,
 				7FAD55CB2889D8DC009A4020 /* URLSheetView.swift */,
 				7FAD55CD2889EB16009A4020 /* EditCommandsHandlerView.swift */,
 				7F8D9791289135CA0018AA2A /* ShortcutKeysView.swift */,
@@ -465,10 +468,11 @@
 				7F8D9794289165A10018AA2A /* AppStorageKey.swift in Sources */,
 				7FF08B082881E636000ED2AD /* NSWindow+Extension.swift in Sources */,
 				7F8D979C2891731E0018AA2A /* CGPoint+Extension.swift in Sources */,
+				7FC3E32129C4E9CB008EFC1B /* ShortcutsAppManager.swift in Sources */,
 				7FF08B1D2885DB94000ED2AD /* WheelPickerSection.swift in Sources */,
 				7FD345AD28803DEE00DDD1D5 /* AppDelegate.swift in Sources */,
 				7F8D979A28916EBB0018AA2A /* ImageProvider.swift in Sources */,
-				7FF08B0B2881E6DD000ED2AD /* PreferencesView.swift in Sources */,
+				7FF08B0B2881E6DD000ED2AD /* SettingsView.swift in Sources */,
 				7FF08B0E288544AC000ED2AD /* AppsManager.swift in Sources */,
 				7FAD55CC2889D8DC009A4020 /* URLSheetView.swift in Sources */,
 			);
@@ -693,7 +697,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 8;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = E225268FKL;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -708,7 +712,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.va.commander;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -726,7 +730,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 8;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = E225268FKL;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -741,7 +745,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.va.commander;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
