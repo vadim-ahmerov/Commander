@@ -1,6 +1,3 @@
-// NSWindow+Extension.swift
-// Copyright (c) 2023 Vadim Ahmerov
-
 import AppKit
 
 extension NSWindow {

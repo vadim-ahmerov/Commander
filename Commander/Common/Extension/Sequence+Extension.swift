@@ -1,6 +1,3 @@
-// Sequence+Extension.swift
-// Copyright (c) 2023 Vadim Ahmerov
-
 import Foundation
 
 extension Sequence {

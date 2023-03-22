@@ -1,6 +1,3 @@
-// AppDelegate.swift
-// Copyright (c) 2023 Vadim Ahmerov
-
 import AppKit
 
 final class AppDelegate: NSObject, NSApplicationDelegate {

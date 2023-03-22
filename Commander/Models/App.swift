@@ -1,6 +1,3 @@
-// App.swift
-// Copyright (c) 2023 Vadim Ahmerov
-
 import Foundation
 
 // MARK: - App

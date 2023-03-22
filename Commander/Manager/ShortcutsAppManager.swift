@@ -1,8 +1,5 @@
-// ShortcutsAppManager.swift
-// Copyright (c) 2023 Vadim Ahmerov
-
-import Foundation
 import AppKit
+import Foundation
 
 final class ShortcutsAppManager {
     // MARK: Internal

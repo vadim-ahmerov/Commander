@@ -1,6 +1,3 @@
-// DIContainer.swift
-// Copyright (c) 2023 Vadim Ahmerov
-
 import Combine
 import SwiftUI
 
@@ -11,6 +8,7 @@ struct DIContainer {
     let shortcutNotifier: ShortcutNotifier
     let bookmarksManager: BookmarksManager
     let imageProvider: ImageProvider
+    let appRatingManager: AppRatingManager
 }
 
 // MARK: EnvironmentKey
@@ -20,7 +18,8 @@ extension DIContainer: EnvironmentKey {
         appsManager: AppsManager(),
         shortcutNotifier: ShortcutNotifier(),
         bookmarksManager: BookmarksManager(),
-        imageProvider: ImageProvider()
+        imageProvider: ImageProvider(),
+        appRatingManager: AppRatingManager()
     )
 }
 

@@ -1,6 +1,3 @@
-// TextArea.swift
-// Copyright (c) 2023 Vadim Ahmerov
-
 import SwiftUI
 
 struct TextArea: NSViewRepresentable {

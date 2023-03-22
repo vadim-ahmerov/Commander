@@ -1,6 +1,3 @@
-// SettingsView.swift
-// Copyright (c) 2023 Vadim Ahmerov
-
 import AppKit
 import SwiftUI
 
@@ -40,6 +37,7 @@ struct SettingsView: View {
                 "You have reached the maximum of \(Self.maxAppsCount) apps. Please remove an existing app before adding a new one."
             )
         }).frame(minWidth: Self.width, maxWidth: Self.width).onAppear {
+            diContainer.appRatingManager.requestRateIfNeeded()
             showGreeting = firstLaunch
             firstLaunch = false
         }

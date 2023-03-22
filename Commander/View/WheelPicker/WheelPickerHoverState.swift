@@ -1,6 +1,3 @@
-// WheelPickerHoverState.swift
-// Copyright (c) 2023 Vadim Ahmerov
-
 extension WheelPicker {
     enum HoverState: Equatable {
         case disabled

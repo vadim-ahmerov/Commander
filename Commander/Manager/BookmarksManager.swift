@@ -1,6 +1,3 @@
-// BookmarksManager.swift
-// Copyright (c) 2023 Vadim Ahmerov
-
 import Foundation
 
 final class BookmarksManager {

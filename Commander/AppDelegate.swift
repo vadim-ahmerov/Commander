@@ -1,8 +1,6 @@
-// AppDelegate.swift
-// Copyright (c) 2023 Vadim Ahmerov
-
 import Combine
 import ServiceManagement
+import StoreKit
 import SwiftUI
 
 // MARK: - AppDelegate
@@ -29,7 +27,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
             self?.shortcutStateUpdated(isTriggered: isTriggered)
         }.store(in: &cancellables)
         openSettingsIfNeeded()
-
+        NSApplication.shared.mainMenu = AppMenu()
         configureAutoLaunch()
     }
 
@@ -94,14 +92,28 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         let settingsItem = NSMenuItem(title: "Settings", action: #selector(openSettings), keyEquivalent: ",")
         let aboutItem = NSMenuItem(title: "About", action: #selector(openAbout), keyEquivalent: "")
 
+        let rateAppItem = NSMenuItem(title: "Rate App", action: #selector(rateApp), keyEquivalent: "")
+        let githubItem = NSMenuItem(title: "View on Github", action: #selector(viewGithub), keyEquivalent: "")
+
         let requestFeatureItem = NSMenuItem(title: "Request a Feature", action: #selector(requestFeature), keyEquivalent: "")
         let reportBugItem = NSMenuItem(title: "Report a Bug", action: #selector(reportBug), keyEquivalent: "")
         let contactUsItem = NSMenuItem(title: "Contact us", action: #selector(contactUs), keyEquivalent: "")
 
-        [settingsItem, .separator(), requestFeatureItem, reportBugItem, contactUsItem, .separator(), aboutItem, quitItem]
-            .forEach {
-                statusBarItem.menu?.addItem($0)
-            }
+        [
+            settingsItem,
+            .separator(),
+            requestFeatureItem,
+            reportBugItem,
+            contactUsItem,
+            .separator(),
+            rateAppItem,
+            githubItem,
+            .separator(),
+            aboutItem,
+            quitItem,
+        ].forEach {
+            statusBarItem.menu?.addItem($0)
+        }
 
         if let button = statusBarItem.button {
             button.image = NSImage(named: "menu template")
@@ -215,6 +227,18 @@ extension AppDelegate {
     private func openAbout() {
         NSApp.activate(ignoringOtherApps: true)
         NSApp.orderFrontStandardAboutPanel()
+    }
+
+    @objc
+    private func rateApp() {
+        diContainer.appRatingManager.openRatePage()
+    }
+
+    @objc
+    private func viewGithub() {
+        if let url = URL(string: "https://github.com/vadim-ahmerov/Commander") {
+            NSWorkspace.shared.open(url)
+        }
     }
 
     @objc

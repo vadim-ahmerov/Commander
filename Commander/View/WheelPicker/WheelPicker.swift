@@ -1,6 +1,3 @@
-// WheelPicker.swift
-// Copyright (c) 2023 Vadim Ahmerov
-
 import Combine
 import Foundation
 import SwiftUI

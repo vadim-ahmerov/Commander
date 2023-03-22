@@ -1,6 +1,3 @@
-// URLSheetView.swift
-// Copyright (c) 2023 Vadim Ahmerov
-
 import SwiftUI
 
 extension SettingsView {
@@ -26,7 +23,7 @@ extension SettingsView {
                 }
             }.onChange(of: enteredText) { newValue in
                 urlIsInvalid = URL(string: newValue) == nil
-            }.padding().overlay(EditCommandsHandlerView()).frame(width: 400)
+            }.padding().frame(width: 400)
         }
 
         // MARK: Private

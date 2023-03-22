@@ -10,6 +10,8 @@
 		7F5A302028815BF500E3372D /* TrackingAreaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5A301F28815BF500E3372D /* TrackingAreaView.swift */; };
 		7F5A302228815C6300E3372D /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5A302128815C6300E3372D /* VisualEffectView.swift */; };
 		7F5A30242881601300E3372D /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5A30232881601300E3372D /* View+Extension.swift */; };
+		7F5D61DE29CAC8F600092688 /* AppRatingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5D61DD29CAC8F600092688 /* AppRatingManager.swift */; };
+		7F5D61E029CAE15900092688 /* AppMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5D61DF29CAE15900092688 /* AppMenu.swift */; };
 		7F8481AD2880A854002419E7 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8481AC2880A854002419E7 /* main.swift */; };
 		7F8481AF2880BE46002419E7 /* WheelPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F8481AE2880BE46002419E7 /* WheelPicker.swift */; };
 		7F8B666A2893F14200E2B108 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F8B66692893F14200E2B108 /* Assets.xcassets */; };
@@ -30,7 +32,6 @@
 		7FA07D4F29A1C6D000F32F1C /* TextArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FA07D4E29A1C6D000F32F1C /* TextArea.swift */; };
 		7FAD55C9288956E2009A4020 /* BookmarksManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FAD55C8288956E2009A4020 /* BookmarksManager.swift */; };
 		7FAD55CC2889D8DC009A4020 /* URLSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FAD55CB2889D8DC009A4020 /* URLSheetView.swift */; };
-		7FAD55CE2889EB16009A4020 /* EditCommandsHandlerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FAD55CD2889EB16009A4020 /* EditCommandsHandlerView.swift */; };
 		7FBDF3FF2880953C00173B7B /* ShortcutNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FBDF3FE2880953C00173B7B /* ShortcutNotifier.swift */; };
 		7FC3E32129C4E9CB008EFC1B /* ShortcutsAppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FC3E32029C4E9CB008EFC1B /* ShortcutsAppManager.swift */; };
 		7FD345AD28803DEE00DDD1D5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7FD345AC28803DEE00DDD1D5 /* AppDelegate.swift */; };
@@ -101,6 +102,8 @@
 		7F5A301F28815BF500E3372D /* TrackingAreaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingAreaView.swift; sourceTree = "<group>"; };
 		7F5A302128815C6300E3372D /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		7F5A30232881601300E3372D /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
+		7F5D61DD29CAC8F600092688 /* AppRatingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppRatingManager.swift; sourceTree = "<group>"; };
+		7F5D61DF29CAE15900092688 /* AppMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppMenu.swift; sourceTree = "<group>"; };
 		7F8481AC2880A854002419E7 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		7F8481AE2880BE46002419E7 /* WheelPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelPicker.swift; sourceTree = "<group>"; };
 		7F8B66632893F14200E2B108 /* Launcher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Launcher.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -122,7 +125,6 @@
 		7FA07D4E29A1C6D000F32F1C /* TextArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextArea.swift; sourceTree = "<group>"; };
 		7FAD55C8288956E2009A4020 /* BookmarksManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookmarksManager.swift; sourceTree = "<group>"; };
 		7FAD55CB2889D8DC009A4020 /* URLSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSheetView.swift; sourceTree = "<group>"; };
-		7FAD55CD2889EB16009A4020 /* EditCommandsHandlerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditCommandsHandlerView.swift; sourceTree = "<group>"; };
 		7FBDF3FE2880953C00173B7B /* ShortcutNotifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutNotifier.swift; sourceTree = "<group>"; };
 		7FC3E32029C4E9CB008EFC1B /* ShortcutsAppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsAppManager.swift; sourceTree = "<group>"; };
 		7FD345A928803DEE00DDD1D5 /* Commander.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Commander.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -231,6 +233,7 @@
 				7FD345B028803DEF00DDD1D5 /* Assets.xcassets */,
 				7FD345B528803DEF00DDD1D5 /* Commander.entitlements */,
 				7F8481AC2880A854002419E7 /* main.swift */,
+				7F5D61DF29CAE15900092688 /* AppMenu.swift */,
 			);
 			path = Commander;
 			sourceTree = "<group>";
@@ -275,6 +278,7 @@
 				7F8D9795289167690018AA2A /* AppSearcher.swift */,
 				7F8D979928916EBB0018AA2A /* ImageProvider.swift */,
 				7FC3E32029C4E9CB008EFC1B /* ShortcutsAppManager.swift */,
+				7F5D61DD29CAC8F600092688 /* AppRatingManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -311,7 +315,6 @@
 			children = (
 				7FF08B0A2881E6DD000ED2AD /* SettingsView.swift */,
 				7FAD55CB2889D8DC009A4020 /* URLSheetView.swift */,
-				7FAD55CD2889EB16009A4020 /* EditCommandsHandlerView.swift */,
 				7F8D9791289135CA0018AA2A /* ShortcutKeysView.swift */,
 			);
 			path = Preferences;
@@ -447,7 +450,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7FD345AF28803DEE00DDD1D5 /* CommanderView.swift in Sources */,
-				7FAD55CE2889EB16009A4020 /* EditCommandsHandlerView.swift in Sources */,
+				7F5D61E029CAE15900092688 /* AppMenu.swift in Sources */,
 				7F8481AF2880BE46002419E7 /* WheelPicker.swift in Sources */,
 				7FF08B1B2885DAE9000ED2AD /* WheelPickerHoverState.swift in Sources */,
 				7F8481AD2880A854002419E7 /* main.swift in Sources */,
@@ -473,6 +476,7 @@
 				7FD345AD28803DEE00DDD1D5 /* AppDelegate.swift in Sources */,
 				7F8D979A28916EBB0018AA2A /* ImageProvider.swift in Sources */,
 				7FF08B0B2881E6DD000ED2AD /* SettingsView.swift in Sources */,
+				7F5D61DE29CAC8F600092688 /* AppRatingManager.swift in Sources */,
 				7FF08B0E288544AC000ED2AD /* AppsManager.swift in Sources */,
 				7FAD55CC2889D8DC009A4020 /* URLSheetView.swift in Sources */,
 			);
@@ -518,7 +522,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = "$(inherited)";
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = E225268FKL;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -531,7 +535,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.va.commander.launcher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -550,7 +554,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = "$(inherited)";
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = E225268FKL;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -563,7 +567,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.va.commander.launcher;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -606,6 +610,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 9;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -625,6 +630,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.5;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -667,6 +673,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 9;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -680,6 +687,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MARKETING_VERSION = 1.5;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -697,7 +705,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = "$(inherited)";
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = E225268FKL;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -712,7 +720,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.va.commander;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -730,7 +738,7 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = "$(inherited)";
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = E225268FKL;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -745,7 +753,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 12.0;
-				MARKETING_VERSION = 1.4;
+				MARKETING_VERSION = "$(inherited)";
 				PRODUCT_BUNDLE_IDENTIFIER = com.va.commander;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

@@ -1,6 +1,3 @@
-// AppsManager.swift
-// Copyright (c) 2023 Vadim Ahmerov
-
 import AppKit
 import Combine
 
