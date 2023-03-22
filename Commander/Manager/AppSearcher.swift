@@ -11,6 +11,10 @@ final class AppSearcher {
         let systemApps: [App]
         let utilities: [App]
 
+        var joined: [App] {
+            shortcuts + localApps + systemApps + utilities
+        }
+
         static let empty = Self(shortcuts: [], localApps: [], systemApps: [], utilities: [])
     }
 

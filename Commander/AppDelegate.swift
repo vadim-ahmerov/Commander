@@ -29,6 +29,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         openSettingsIfNeeded()
         NSApplication.shared.mainMenu = AppMenu()
         configureAutoLaunch()
+
+//        #if DEBUG
+//        openSettings()
+//        #endif
     }
 
     // MARK: Private

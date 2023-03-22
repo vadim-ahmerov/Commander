@@ -1,16 +1,26 @@
 import SwiftUI
 
-extension SettingsView {
-    struct URLSheetView: View {
+extension SettingsSidebarView {
+    struct URLInputView: View {
         // MARK: Internal
 
         @Binding var isVisible: Bool
         @Binding var enteredURL: URL?
 
         var body: some View {
-            VStack(alignment: .leading) {
-                Text("Add new URL").font(.title3)
-                TextField("Paste your URL here", text: $enteredText).padding(.bottom, 8)
+            VStack(alignment: .leading, spacing: 8) {
+                HStack(alignment: .firstTextBaseline) {
+                    Image(systemName: "link")
+                        .foregroundColor(.blue)
+                        .font(.title3)
+                    Text("Add URL for quick access")
+                        .font(.title3.weight(.medium))
+                }
+                Text("Once you've added the URL, you can launch it like any other app using the Commander launcher.")
+                    .padding(.bottom, 8)
+                TextField("Paste your URL here", text: $enteredText)
+                    .textFieldStyle(.roundedBorder)
+                    .padding(.bottom, 8)
                 HStack {
                     Spacer()
                     Button("Cancel") {
