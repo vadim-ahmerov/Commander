@@ -98,8 +98,12 @@ struct SettingsSidebarView: View {
         panel.canChooseFiles = true
         panel.canChooseDirectories = true
         if panel.runModal() == .OK, let url = panel.url {
-            try? diContainer.bookmarksManager.addToBookmarks(url: url)
-            diContainer.appsManager.apps.value.append(App(url: url, name: url.lastPathComponent))
+            do {
+                try diContainer.bookmarksManager.addToBookmarks(url: url)
+                diContainer.appsManager.apps.value.append(App(url: url, name: url.lastPathComponent))
+            } catch {
+                // do nothing
+            }
         }
     }
 
