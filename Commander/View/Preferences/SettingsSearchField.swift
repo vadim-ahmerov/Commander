@@ -16,7 +16,7 @@ struct SettingsSearchField: View {
         }
     }
 
-    @ViewBuilder  private var contentView: some View {
+    @ViewBuilder private var contentView: some View {
         if !isFocused {
             searchIconView
         }

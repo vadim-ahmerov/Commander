@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7F2F774029F402AC00BC5402 /* SettingsTutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F2F773F29F402AC00BC5402 /* SettingsTutorialView.swift */; };
 		7F5A302028815BF500E3372D /* TrackingAreaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5A301F28815BF500E3372D /* TrackingAreaView.swift */; };
 		7F5A302228815C6300E3372D /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5A302128815C6300E3372D /* VisualEffectView.swift */; };
 		7F5A30242881601300E3372D /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F5A30232881601300E3372D /* View+Extension.swift */; };
@@ -101,6 +102,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		7F2F773F29F402AC00BC5402 /* SettingsTutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTutorialView.swift; sourceTree = "<group>"; };
 		7F5A301F28815BF500E3372D /* TrackingAreaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackingAreaView.swift; sourceTree = "<group>"; };
 		7F5A302128815C6300E3372D /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
 		7F5A30232881601300E3372D /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
@@ -322,6 +324,7 @@
 				7F8D9791289135CA0018AA2A /* ShortcutKeysView.swift */,
 				7F84C29829CB426D00316630 /* SettingsSidebarView.swift */,
 				7F84C29C29CB614800316630 /* SettingsSearchField.swift */,
+				7F2F773F29F402AC00BC5402 /* SettingsTutorialView.swift */,
 			);
 			path = Preferences;
 			sourceTree = "<group>";
@@ -477,6 +480,7 @@
 				7F8D9794289165A10018AA2A /* AppStorageKey.swift in Sources */,
 				7FF08B082881E636000ED2AD /* NSWindow+Extension.swift in Sources */,
 				7F8D979C2891731E0018AA2A /* CGPoint+Extension.swift in Sources */,
+				7F2F774029F402AC00BC5402 /* SettingsTutorialView.swift in Sources */,
 				7FC3E32129C4E9CB008EFC1B /* ShortcutsAppManager.swift in Sources */,
 				7FF08B1D2885DB94000ED2AD /* WheelPickerSection.swift in Sources */,
 				7FD345AD28803DEE00DDD1D5 /* AppDelegate.swift in Sources */,
