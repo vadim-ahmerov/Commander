@@ -41,7 +41,7 @@ struct SettingsView: View {
                     Text("Welcome to Commander!").font(.largeTitle).fontWeight(.light)
                 }
                 Text(
-                    "Access this app launcher at any time by using the specified shortcut and moving your mouse slightly. Once the app picker appears, hover over the desired app and release the shortcut to launch it. You can also rearrange your apps by dragging and dropping them.\nTo choose the apps you want to launch, simply tick them on the left sidebar."
+                    "Access this app launcher at any time by using the specified shortcut and moving your mouse slightly. Once the app picker appears, hover over the desired app and release the shortcut to launch it. You can also rearrange your apps by dragging and dropping them.\nSelect the apps you wish to launch by either ticking them in the left sidebar or dragging and dropping them onto the circle below."
                 ).font(.title2).fontWeight(.light).fixedSize(horizontal: false, vertical: true)
             }.multilineTextAlignment(.center).padding([.leading, .trailing], 32)
             WheelPicker(

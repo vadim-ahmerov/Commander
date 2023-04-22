@@ -20,7 +20,7 @@ final class ImageProvider {
                         .opacity(0.8)
                 }
             }
-        case .general:
+        case .app, .file:
             Image(nsImage: nsImage(for: app.url, preferredSize: preferredSize))
                 .resizable()
                 .frame(width: preferredSize, height: preferredSize)

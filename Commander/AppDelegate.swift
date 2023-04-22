@@ -21,8 +21,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     let window: NSWindow
 
     func applicationDidFinishLaunching(_: Notification) {
-        try? diContainer.bookmarksManager.restoreAllBookmarks()
-
         diContainer.shortcutNotifier.$shortcutTriggered.sink { [weak self] isTriggered in
             self?.shortcutStateUpdated(isTriggered: isTriggered)
         }.store(in: &cancellables)

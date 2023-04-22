@@ -1,6 +1,10 @@
 import SwiftUI
 
 struct SettingsSidebarView: View {
+    // MARK: Internal
+
+    @Binding var apps: [App]
+
     var body: some View {
         ZStack(alignment: .top) {
             sidebarContent
@@ -11,7 +15,7 @@ struct SettingsSidebarView: View {
             guard let url = url else {
                 return
             }
-            diContainer.appsManager.apps.value.append(App(url: url, name: url.host ?? url.lastPathComponent))
+            try? diContainer.appsManager.add(appURL: url)
         }.sheet(isPresented: $urlSheetIsShowing) {
             URLInputView(isVisible: $urlSheetIsShowing, enteredURL: $enteredURL)
         }.alert("App Limit Reached", isPresented: $maxAppsCountSheetIsShowing, actions: {
@@ -20,10 +24,20 @@ struct SettingsSidebarView: View {
             }
         }, message: {
             Text(
-                "You have reached the maximum of \(Self.maxAppsCount) apps. Please remove an existing app before adding a new one."
+                "You have reached the maximum of \(AppsManager.maxAppsCount) apps. Please remove an existing app before adding a new one."
             )
         }).animation(.default, value: apps)
     }
+
+    // MARK: Private
+
+    @State private var allApps = AppSearcher.SearchResult.empty
+    @State private var urlSheetIsShowing = false
+    @State private var enteredURL: URL?
+    @State private var maxAppsCountSheetIsShowing = false
+    @State private var searchText = ""
+    @State private var isEditing = false
+    @Environment(\.injected) private var diContainer: DIContainer
 
     private var sidebarContent: some View {
         List {
@@ -67,14 +81,6 @@ struct SettingsSidebarView: View {
         }.listStyle(.sidebar)
     }
 
-    private func button(title: String, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            GroupBox {
-                Text(title).padding(.horizontal, 2)
-            }
-        }.buttonStyle(.plain)
-    }
-
     private var sidebarTopGradient: some View {
         GeometryReader { reader in
             VisualEffectView(material: .sidebar, blendingMode: .behindWindow)
@@ -88,6 +94,22 @@ struct SettingsSidebarView: View {
         }
     }
 
+    private var maxAppsCountNotReached: Bool {
+        !maxAppsCountReached
+    }
+
+    private var maxAppsCountReached: Bool {
+        apps.count >= AppsManager.maxAppsCount
+    }
+
+    private func button(title: String, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            GroupBox {
+                Text(title).padding(.horizontal, 2)
+            }
+        }.buttonStyle(.plain)
+    }
+
     private func addNewFileOrFolder() {
         guard maxAppsCountNotReached else {
             maxAppsCountSheetIsShowing = true
@@ -99,8 +121,7 @@ struct SettingsSidebarView: View {
         panel.canChooseDirectories = true
         if panel.runModal() == .OK, let url = panel.url {
             do {
-                try diContainer.bookmarksManager.addToBookmarks(url: url)
-                diContainer.appsManager.apps.value.append(App(url: url, name: url.lastPathComponent))
+                try diContainer.appsManager.add(appURL: url)
             } catch {
                 // do nothing
             }
@@ -140,21 +161,4 @@ struct SettingsSidebarView: View {
             }
         }
     }
-
-    @Binding var apps: [App]
-    @State private var allApps = AppSearcher.SearchResult.empty
-    @State private var urlSheetIsShowing = false
-    @State private var enteredURL: URL?
-    @State private var maxAppsCountSheetIsShowing = false
-    @State private var searchText = ""
-    @State private var isEditing = false
-    @Environment(\.injected) private var diContainer: DIContainer
-
-    private var maxAppsCountNotReached: Bool {
-        !maxAppsCountReached
-    }
-    private var maxAppsCountReached: Bool {
-        apps.count >= Self.maxAppsCount
-    }
-    private static let maxAppsCount = 12
 }

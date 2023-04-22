@@ -1,6 +1,12 @@
 import Foundation
 
 final class BookmarksManager {
+    // MARK: Lifecycle
+
+    init() {
+        try? restoreAllBookmarks()
+    }
+
     // MARK: Internal
 
     /// Call this method to get persistent access for a given URL.

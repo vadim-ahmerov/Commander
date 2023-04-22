@@ -16,8 +16,7 @@ struct SettingsSearchField: View {
         }
     }
 
-    @ViewBuilder
-    private var contentView: some View {
+    @ViewBuilder  private var contentView: some View {
         if !isFocused {
             searchIconView
         }
@@ -68,6 +67,8 @@ extension SettingsSearchField {
             func controlTextDidChange(_: Notification) {
                 onTextChange?(textField.stringValue)
             }
+
+            // MARK: Private
 
             private func configureTextField() {
                 let font = NSFont.preferredFont(forTextStyle: .body)

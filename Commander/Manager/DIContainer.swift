@@ -6,7 +6,6 @@ import SwiftUI
 struct DIContainer {
     let appsManager: AppsManager
     let shortcutNotifier: ShortcutNotifier
-    let bookmarksManager: BookmarksManager
     let imageProvider: ImageProvider
     let appRatingManager: AppRatingManager
 }
@@ -15,9 +14,8 @@ struct DIContainer {
 
 extension DIContainer: EnvironmentKey {
     static var defaultValue = DIContainer(
-        appsManager: AppsManager(),
+        appsManager: AppsManager(bookmarksManager: BookmarksManager()),
         shortcutNotifier: ShortcutNotifier(),
-        bookmarksManager: BookmarksManager(),
         imageProvider: ImageProvider(),
         appRatingManager: AppRatingManager()
     )

@@ -1,9 +1,11 @@
 import Combine
 import Foundation
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct WheelPicker: View {
     // MARK: Internal
+    @State private var isTargetedForDrop = false
 
     struct IndexedApp: Equatable {
         var visualIndex: Int
@@ -26,8 +28,22 @@ struct WheelPicker: View {
         }
     }
 
+    @Environment(\.injected) private var diContainer: DIContainer
     let apps: CurrentValueSubject<[App], Never>
     @Binding var hoverState: HoverState
+    private var textInTheMiddle: String? {
+        if let hoverIndex = hoverState.hoveringAppIndex, indexedApps.indices.contains(hoverIndex) {
+            return indexedApps[hoverIndex].app.name
+        } else if isTargetedForDrop {
+            if apps.value.count < AppsManager.maxAppsCount {
+                return "Release the mouse button or trackpad to add a new item to the picker"
+            } else {
+                return "Maximum item limit reached. Please remove an item before adding another"
+            }
+        } else {
+            return nil
+        }
+    }
 
     var body: some View {
         ZStack {
@@ -36,8 +52,8 @@ struct WheelPicker: View {
                 .shadow(radius: 3)
             sections
 
-            if let hoverIndex = hoverState.hoveringAppIndex, indexedApps.indices.contains(hoverIndex) {
-                Text(indexedApps[hoverIndex].app.name)
+            if let textInTheMiddle {
+                Text(textInTheMiddle)
                     .foregroundColor(Color(.secondaryLabelColor))
                     .bold().frame(width: emptySpaceRadius)
                     .multilineTextAlignment(.center)
@@ -56,7 +72,27 @@ struct WheelPicker: View {
                 return
             }
             self.apps.send(indexedApps.sorted(by: \.visualIndex).map(\.app))
-        }.padding(6).frame(width: size, height: size)
+        }
+        .onDrop(of: [UTType.fileURL.identifier], isTargeted: $isTargetedForDrop) { providers in
+            providers.forEach { provider in
+                provider.loadDataRepresentation(forTypeIdentifier: UTType.fileURL.identifier) { data, _ in
+                    if let data, let path = String(data: data, encoding: .utf8), let url = URL(string: path) {
+                        DispatchQueue.main.async {
+                            try? diContainer.appsManager.add(appURL: url)
+                        }
+                    }
+                }
+            }
+            return true
+        }
+        .onChange(of: isTargetedForDrop) { isTargeted in
+            if isTargeted {
+                hoverState = .disabled
+            } else {
+                hoverState = .enabledEmpty
+            }
+        }
+        .opacity(isTargetedForDrop ? 0.8 : 1).padding(6).frame(width: size, height: size)
     }
 
     // MARK: Private

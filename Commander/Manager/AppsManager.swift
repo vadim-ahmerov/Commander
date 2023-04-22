@@ -1,12 +1,21 @@
 import AppKit
 import Combine
 
+// MARK: - AppsManagerError
+
+enum AppsManagerError: Error {
+    case maxCountReached
+    case alreadyAdded
+}
+
 // MARK: - AppsManager
 
 final class AppsManager {
     // MARK: Lifecycle
 
-    init() {
+    init(bookmarksManager: BookmarksManager) {
+        self.bookmarksManager = bookmarksManager
+
         try? addStoredAppsIfNeeded()
         apps.send(storedApps)
         apps.dropFirst().sink { [weak self] apps in
@@ -16,6 +25,8 @@ final class AppsManager {
     }
 
     // MARK: Internal
+
+    static let maxAppsCount = 12
 
     let apps = CurrentValueSubject<[App], Never>([])
     let allApps = CurrentValueSubject<AppSearcher.SearchResult, Never>(.empty)
@@ -29,7 +40,7 @@ final class AppsManager {
             switch app.kind {
             case .shortcut:
                 searcher.shortcutsAppManager.run(app: app)
-            case .general:
+            case .file, .app:
                 NSWorkspace.shared.open(app.url)
             }
         }
@@ -45,10 +56,28 @@ final class AppsManager {
         searcher.getRecentApps()
     }
 
+    func add(appURL: URL) throws {
+        guard apps.value.count < Self.maxAppsCount else {
+            throw AppsManagerError.maxCountReached
+        }
+        if apps.value.map(\.url).contains(appURL) {
+            throw AppsManagerError.alreadyAdded
+        }
+        let app = App(url: appURL)
+        switch app.kind {
+        case .file:
+            try bookmarksManager.addToBookmarks(url: app.url)
+        default:
+            break // noop
+        }
+        apps.value.append(app)
+    }
+
     // MARK: Private
 
     @UserDefault("apps.json") private var storedApps: [App] = []
     private let searcher = AppSearcher()
+    private let bookmarksManager: BookmarksManager
     private var cancellables = Set<AnyCancellable>()
 
     private func addStoredAppsIfNeeded() throws {
