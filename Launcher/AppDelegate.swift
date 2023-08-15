@@ -40,7 +40,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     private func mainAppURL() -> URL {
         var path = Bundle.main.bundlePath as NSString
-        for _ in 1...4 {
+        for _ in 1 ... 4 {
             path = path.deletingLastPathComponent as NSString
         }
         return URL(fileURLWithPath: path as String)

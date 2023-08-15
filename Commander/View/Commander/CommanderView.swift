@@ -45,7 +45,7 @@ struct CommanderView: View {
 
     @State private var shortcutTriggerDate: Date?
     @AppStorage(AppStorageKey.showOnMouseMove) private var showOnMouseMove = true
-    @Environment(\.injected) private var diContainer: DIContainer
+    private let diContainer = DIContainer.shared
     @State private var hoverState = WheelPicker.HoverState.enabledEmpty
     @State private var isHidden = true
     private let clearHoverSubject = PassthroughSubject<Void, Never>()

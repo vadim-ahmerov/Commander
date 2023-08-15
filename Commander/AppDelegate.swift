@@ -9,18 +9,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     // MARK: Lifecycle
 
     override init() {
-        diContainer = .defaultValue
-        window = Self.makeWindow(diContainer: diContainer)
-        popover = Self.makePopover(diContainer: diContainer)
         statusItem = Self.makeStatusItem()
+        diContainer = DIContainer(statusItem: statusItem)
         super.init()
     }
 
     // MARK: Internal
 
-    let window: NSWindow
-
     func applicationDidFinishLaunching(_: Notification) {
+        window = Self.makeWindow(diContainer: diContainer)
+        popover = Self.makePopover(diContainer: diContainer)
+
         diContainer.shortcutNotifier.$shortcutTriggered.sink { [weak self] isTriggered in
             self?.shortcutStateUpdated(isTriggered: isTriggered)
         }.store(in: &cancellables)
@@ -33,21 +32,26 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 //        #endif
     }
 
+    func applicationDidBecomeActive(_: Notification) {
+        openSettings()
+    }
+
     // MARK: Private
 
     @UserDefault("first launch") private var firstLaunch = true
 
-    private let diContainer: DIContainer
-    private var cancellables = Set<AnyCancellable>()
-    private let popover: NSPopover
+    let diContainer: DIContainer
     private let statusItem: NSStatusItem
+    private var window: NSWindow?
+    private var popover: NSPopover?
+    private var cancellables = Set<AnyCancellable>()
 
     private lazy var settingsWindow = AppDelegate.makeSettingsWindow(diContainer: diContainer)
 
-    private static func makeWindow(diContainer: DIContainer) -> NSWindow {
+    private static func makeWindow(diContainer _: DIContainer) -> NSWindow {
         let window = NSWindow(
             contentViewController: NSHostingController(
-                rootView: CommanderView().environment(\.injected, diContainer)
+                rootView: CommanderView()
             )
         )
         window.level = .modalPanel
@@ -76,11 +80,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         return window
     }
 
-    private static func makePopover(diContainer: DIContainer) -> NSPopover {
+    private static func makePopover(diContainer _: DIContainer) -> NSPopover {
         let popover = NSPopover()
         popover.behavior = .transient
         popover.contentViewController = NSHostingController(
-            rootView: CommanderView().environment(\.injected, diContainer)
+            rootView: CommanderView()
         )
         return popover
     }
@@ -125,9 +129,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         return statusBarItem
     }
 
-    private static func makeSettingsWindow(diContainer: DIContainer) -> NSWindow {
+    private static func makeSettingsWindow(diContainer _: DIContainer) -> NSWindow {
         let controller = NSHostingController(
-            rootView: SettingsView().environment(\.injected, diContainer)
+            rootView: SettingsView()
         )
         let window = NSWindow(contentViewController: controller)
         window.title = "Settings"
@@ -171,23 +175,25 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     @objc
     private func togglePopover() {
-        if let button = statusItem.button {
-            if popover.isShown {
-                popover.performClose(nil)
-            } else {
-                popover.show(
-                    relativeTo: button.bounds,
-                    of: button,
-                    preferredEdge: .minY
-                )
-            }
+        guard let popover, let button = statusItem.button else {
+            return
+        }
+        if popover.isShown {
+            popover.performClose(nil)
+        } else {
+            popover.show(
+                relativeTo: button.bounds,
+                of: button,
+                preferredEdge: .minY
+            )
         }
     }
 
     private func shortcutStateUpdated(isTriggered: Bool) {
-        if window.isVisible == isTriggered {
+        guard let window, window.isVisible != isTriggered else {
             return
         }
+
         window.setIsVisible(isTriggered)
         if isTriggered {
             window.orderFrontRegardless()
@@ -203,9 +209,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 }
 
 extension AppDelegate {
-    private static func makeWindow<Content: View>(title: String, swiftUIView: Content, diContainer: DIContainer) -> NSWindow {
+    private static func makeWindow<Content: View>(title: String, swiftUIView: Content, diContainer _: DIContainer) -> NSWindow {
         let controller = NSHostingController(
-            rootView: swiftUIView.environment(\.injected, diContainer)
+            rootView: swiftUIView
         )
         let window = NSWindow(contentViewController: controller)
         window.title = title

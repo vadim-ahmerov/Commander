@@ -3,27 +3,25 @@ import SwiftUI
 
 // MARK: - DIContainer
 
-struct DIContainer {
+final class DIContainer {
     let appsManager: AppsManager
     let shortcutNotifier: ShortcutNotifier
     let imageProvider: ImageProvider
     let appRatingManager: AppRatingManager
-}
+    let menuBarItemManager: MenuBarItemManager
 
-// MARK: EnvironmentKey
+    init(statusItem: NSStatusItem) {
+        appsManager = AppsManager(bookmarksManager: BookmarksManager())
+        shortcutNotifier = ShortcutNotifier()
+        imageProvider = ImageProvider()
+        appRatingManager = AppRatingManager()
+        menuBarItemManager = MenuBarItemManager(statusItem: statusItem)
+    }
 
-extension DIContainer: EnvironmentKey {
-    static var defaultValue = DIContainer(
-        appsManager: AppsManager(bookmarksManager: BookmarksManager()),
-        shortcutNotifier: ShortcutNotifier(),
-        imageProvider: ImageProvider(),
-        appRatingManager: AppRatingManager()
-    )
-}
-
-extension EnvironmentValues {
-    var injected: DIContainer {
-        get { self[DIContainer.self] }
-        set { self[DIContainer.self] = newValue }
+    static var shared: DIContainer {
+        guard let appDelegate = NSApp.delegate as? AppDelegate else {
+            fatalError()
+        }
+        return appDelegate.diContainer
     }
 }

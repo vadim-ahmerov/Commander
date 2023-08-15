@@ -5,7 +5,7 @@ extension SettingsView {
         // MARK: Internal
 
         var body: some View {
-            VStack(spacing: 10) {
+            VStack(alignment: .leading, spacing: 10) {
                 HStack {
                     Toggle("⌘", isOn: $isCommandEnabled)
                     Toggle("⌥", isOn: $isOptionEnabled)
@@ -14,6 +14,7 @@ extension SettingsView {
                     Toggle("fn", isOn: $isFunctionEnabled)
                 }
                 Toggle("Show only after mouse move", isOn: $showOnMouseMove)
+                Toggle("Show menu bar item", isOn: $showMenuBarItem)
             }.onChange(of: isOptionEnabled) { _ in
                 diContainer.shortcutNotifier.modifiers = enabledModifiers
             }.onChange(of: isControlEnabled) { _ in
@@ -24,6 +25,8 @@ extension SettingsView {
                 diContainer.shortcutNotifier.modifiers = enabledModifiers
             }.onChange(of: isCommandEnabled) { _ in
                 diContainer.shortcutNotifier.modifiers = enabledModifiers
+            }.onChange(of: showMenuBarItem) { showMenuBarItem in
+                diContainer.menuBarItemManager.set(isVisible: showMenuBarItem)
             }.onAppear {
                 isCommandEnabled = diContainer.shortcutNotifier.modifiers.contains(.command)
                 isOptionEnabled = diContainer.shortcutNotifier.modifiers.contains(.option)
@@ -35,8 +38,9 @@ extension SettingsView {
 
         // MARK: Private
 
-        @Environment(\.injected) private var diContainer: DIContainer
+        private let diContainer = DIContainer.shared
         @AppStorage(AppStorageKey.showOnMouseMove) private var showOnMouseMove = true
+        @AppStorage(AppStorageKey.showMenuBarItem) private var showMenuBarItem = false
         @State private var isCommandEnabled = false
         @State private var isOptionEnabled = false
         @State private var isControlEnabled = false

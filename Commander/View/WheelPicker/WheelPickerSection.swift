@@ -12,7 +12,7 @@ extension WheelPicker {
         @Binding var hoverState: HoverState
         @Binding var dragState: DragState
         @Binding var sectionAngle: CGFloat
-        @Environment(\.injected) private var diContainer: DIContainer
+        private let diContainer = DIContainer.shared
 
         var onIndexChange: (_ newIndex: Int) -> Void
 
@@ -21,7 +21,6 @@ extension WheelPicker {
             EmptyView().trackingMouse { point in
                 hoverState.set(isHovering: sectionPath.contains(point), at: indexedApp.visualIndex)
             }
-
 
             ZStack {
                 diContainer.imageProvider.image(for: indexedApp.app, preferredSize: 64)
@@ -43,7 +42,7 @@ extension WheelPicker {
             switch dragState {
             case .inactive:
                 return nil
-            case .active(let appVisualIndex, let offset):
+            case let .active(appVisualIndex, offset):
                 if appVisualIndex == indexedApp.visualIndex {
                     return offset
                 } else {

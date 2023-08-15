@@ -4,8 +4,8 @@ import AppKit
 
 @objc
 protocol AppMenuEditActions {
-    func redo(_ sender:AnyObject)
-    func undo(_ sender:AnyObject)
+    func redo(_ sender: AnyObject)
+    func undo(_ sender: AnyObject)
 }
 
 // MARK: - AppMenu
@@ -21,6 +21,7 @@ final class AppMenu: NSMenu {
         items = [menu]
     }
 
+    @available(*, unavailable)
     required init(coder _: NSCoder) {
         fatalError()
     }

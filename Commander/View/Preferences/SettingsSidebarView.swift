@@ -37,7 +37,7 @@ struct SettingsSidebarView: View {
     @State private var maxAppsCountSheetIsShowing = false
     @State private var searchText = ""
     @State private var isEditing = false
-    @Environment(\.injected) private var diContainer: DIContainer
+    private let diContainer = DIContainer.shared
 
     private var sidebarContent: some View {
         List {

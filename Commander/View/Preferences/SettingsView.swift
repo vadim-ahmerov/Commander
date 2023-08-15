@@ -2,6 +2,7 @@ import AppKit
 import SwiftUI
 
 // MARK: - Settings
+
 struct SettingsView: View {
     // MARK: Internal
 
@@ -23,7 +24,7 @@ struct SettingsView: View {
     private static let wheelWidth: CGFloat = 600
     private static let height: CGFloat = 500
 
-    @Environment(\.injected) private var diContainer: DIContainer
+    private let diContainer = DIContainer.shared
 
     @State private var hoverState = WheelPicker.HoverState.enabledEmpty
     @State private var apps = [App]()

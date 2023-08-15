@@ -4,7 +4,7 @@ final class AppRatingManager {
     // MARK: Internal
 
     func openRatePage() {
-        let appId = 1636862100
+        let appId = 1_636_862_100
         if let url = URL(string: "https://apps.apple.com/app/id\(appId)?action=write-review") {
             NSWorkspace.shared.open(url)
         }

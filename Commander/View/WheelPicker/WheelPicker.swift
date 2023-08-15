@@ -5,6 +5,7 @@ import UniformTypeIdentifiers
 
 struct WheelPicker: View {
     // MARK: Internal
+
     @State private var isTargetedForDrop = false
 
     struct IndexedApp: Equatable {
@@ -20,7 +21,7 @@ struct WheelPicker: View {
 
         func isDragging(appVisualIndex: Int) -> Bool {
             switch self {
-            case .active(let index, _):
+            case let .active(index, _):
                 return index == appVisualIndex
             case .inactive:
                 return false
@@ -28,7 +29,7 @@ struct WheelPicker: View {
         }
     }
 
-    @Environment(\.injected) private var diContainer: DIContainer
+    private let diContainer = DIContainer.shared
     let apps: CurrentValueSubject<[App], Never>
     @Binding var hoverState: HoverState
     private var textInTheMiddle: String? {
@@ -129,11 +130,11 @@ struct WheelPicker: View {
         ) { visualIndex in
             guard
                 let toApp = indexedApps
-                    .enumerated()
-                    .first(where: { visualIndex == $0.element.visualIndex }),
+                .enumerated()
+                .first(where: { visualIndex == $0.element.visualIndex }),
                 let fromApp = indexedApps
-                    .enumerated()
-                    .first(where: { indexedApps[index].visualIndex == $0.element.visualIndex })
+                .enumerated()
+                .first(where: { indexedApps[index].visualIndex == $0.element.visualIndex })
             else {
                 assertionFailure()
                 return
