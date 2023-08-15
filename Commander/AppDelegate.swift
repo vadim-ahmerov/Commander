@@ -27,9 +27,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         NSApplication.shared.mainMenu = AppMenu()
         configureAutoLaunch()
 
-//        #if DEBUG
-//        openSettings()
-//        #endif
+        #if DEBUG
+            openSettings()
+        #endif
     }
 
     func applicationDidBecomeActive(_: Notification) {

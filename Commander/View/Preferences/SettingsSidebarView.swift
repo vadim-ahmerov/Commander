@@ -9,8 +9,8 @@ struct SettingsSidebarView: View {
         ZStack(alignment: .top) {
             sidebarContent
             sidebarTopGradient
-        }.onReceive(diContainer.appsManager.allApps) { allApps in
-            self.allApps = allApps
+        }.onReceive(diContainer.appsManager.appGroups) { allApps in
+            self.appGroups = allApps
         }.onChange(of: enteredURL) { url in
             guard let url = url else {
                 return
@@ -31,7 +31,7 @@ struct SettingsSidebarView: View {
 
     // MARK: Private
 
-    @State private var allApps = AppSearcher.SearchResult.empty
+    @State private var appGroups = [AppGroup]()
     @State private var urlSheetIsShowing = false
     @State private var enteredURL: URL?
     @State private var maxAppsCountSheetIsShowing = false
@@ -53,20 +53,13 @@ struct SettingsSidebarView: View {
                     apps: diContainer.appsManager.apps.value
                 ).transition(.move(edge: .trailing))
 
-                if !allApps.shortcuts.isEmpty {
-                    makeSection(title: "Shortcuts", apps: allApps.shortcuts)
-                }
-                if !allApps.localApps.isEmpty {
-                    makeSection(title: "Apps installed by you", apps: allApps.localApps)
-                }
-                if !allApps.systemApps.isEmpty {
-                    makeSection(title: "System", apps: allApps.systemApps)
-                }
-                if !allApps.utilities.isEmpty {
-                    makeSection(title: "Utilities", apps: allApps.utilities)
+                ForEach(appGroups, id: \.name) { group in
+                    makeSection(title: group.name, apps: group.apps)
                 }
             } else {
-                let matchingApps = allApps.joined.filter { $0.name.localizedCaseInsensitiveContains(searchText) }
+                let matchingApps = appGroups.apps.filter { app in
+                    app.name.localizedCaseInsensitiveContains(searchText)
+                }
                 if matchingApps.isEmpty {
                     HStack {
                         Spacer()

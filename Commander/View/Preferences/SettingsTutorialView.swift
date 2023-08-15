@@ -11,7 +11,7 @@ struct SettingsTutorialView: View {
             TutorialStepView(
                 stepNumber: "1",
                 title: "Select apps to launch",
-                description: "Choose the apps you want to launch by either selecting them in the left sidebar or dragging and dropping them onto the circle below. You can also add files and folders."
+                description: "Choose the apps you want to launch by either selecting them in the left sidebar or dragging and dropping them onto the circle below. You can also add URLs, files, folders or other custom apps by clicking buttons on the top left corner of this window."
             )
 
             TutorialStepView(
@@ -43,7 +43,7 @@ private struct TutorialStepView: View {
                 .frame(width: 22, height: 22)
                 .overlay(Text(stepNumber).font(.body).fontWeight(.bold))
                 .padding(.top, 2)
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 4) {
                 Text(title)
                     .font(.title3.bold())
                 Text(description)

@@ -21,7 +21,7 @@ final class AppsManager {
         apps.dropFirst().sink { [weak self] apps in
             self?.storedApps = apps
         }.store(in: &cancellables)
-        allApps.send(searcher.search())
+        appGroups.send(searcher.search())
     }
 
     // MARK: Internal
@@ -29,10 +29,10 @@ final class AppsManager {
     static let maxAppsCount = 12
 
     let apps = CurrentValueSubject<[App], Never>([])
-    let allApps = CurrentValueSubject<AppSearcher.SearchResult, Never>(.empty)
+    let appGroups = CurrentValueSubject<[AppGroup], Never>([])
 
     func updateApps() {
-        allApps.send(searcher.search())
+        appGroups.send(searcher.search())
     }
 
     func open(app: App) {
@@ -85,7 +85,7 @@ final class AppsManager {
             return
         }
         let allApps = searcher.search()
-        let recommendedApps = allApps.localApps.shuffled().prefix(6)
-        storedApps = Array(recommendedApps)
+//        let recommendedApps = allApps.localApps.shuffled().prefix(6)
+//        storedApps = Array(recommendedApps)
     }
 }

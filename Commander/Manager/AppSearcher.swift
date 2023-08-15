@@ -3,48 +3,39 @@ import ApplicationServices
 import Foundation
 
 final class AppSearcher {
-    // MARK: Internal
-
-    struct SearchResult {
-        let shortcuts: [App]
-        let localApps: [App]
-        let systemApps: [App]
-        let utilities: [App]
-
-        var joined: [App] {
-            shortcuts + localApps + systemApps + utilities
-        }
-
-        static let empty = Self(shortcuts: [], localApps: [], systemApps: [], utilities: [])
+    enum SearchError: Error {
+        case failedToInitializeFileEnumerator
     }
+
+    // MARK: Internal
 
     let shortcutsAppManager = ShortcutsAppManager()
 
-    func search() -> SearchResult {
-        let localAppsURLs = readApplications(
-            directory: .applicationDirectory,
-            domain: .localDomainMask
-        )
-        let utilitiesURLs = readApplications(
-            directory: .applicationDirectory,
-            domain: .systemDomainMask,
-            subpath: "/Utilities"
-        )
-        var systemAppsURLs = readApplications(
-            directory: .applicationDirectory,
-            domain: .systemDomainMask
-        )
+    func search() -> [AppGroup] {
+        var groups = [AppGroup]()
 
-        if let finderURL = readFinderURL() {
-            systemAppsURLs.append(finderURL)
+        groups.append(contentsOf: readApplications(
+            directory: .applicationDirectory,
+            domain: .localDomainMask,
+            parentPath: ["Local"]
+        ))
+
+        groups.append(AppGroup(
+            name: "Shortcuts",
+            apps: shortcutsAppManager.getShortcuts()
+        ))
+
+        if let finderURL = readFinderURL(), let finderApp = app(at: finderURL) {
+            groups.append(AppGroup(name: "Core Services", apps: [finderApp]))
         }
 
-        return SearchResult(
-            shortcuts: shortcutsAppManager.getShortcuts(),
-            localApps: apps(at: localAppsURLs),
-            systemApps: apps(at: systemAppsURLs),
-            utilities: apps(at: utilitiesURLs)
-        )
+        groups.append(contentsOf: readApplications(
+            directory: .applicationDirectory,
+            domain: .systemDomainMask,
+            parentPath: ["System"]
+        ))
+
+        return groups
     }
 
     func getRecentApps() -> [App] {
@@ -68,8 +59,7 @@ final class AppSearcher {
             .filter { $0.absoluteString.hasPrefix(applicationDirectory.absoluteString) }
         let apps = urls.compactMap { app(at: $0) }
         return Array(
-            apps
-                .prefix(5)
+            apps.prefix(5)
         )
     }
 
@@ -95,24 +85,49 @@ final class AppSearcher {
     private func readApplications(
         directory: FileManager.SearchPathDirectory,
         domain: FileManager.SearchPathDomainMask,
-        subpath: String = ""
-    ) -> [URL] {
-        let fileManager = FileManager()
+        parentPath: [String]
+    ) -> [AppGroup] {
         do {
-            let folderUrl = try FileManager.default.url(for: directory, in: domain, appropriateFor: nil, create: false)
-            guard let folderUrlWithSubpath = NSURL(string: folderUrl.path + subpath) as? URL else {
-                return []
-            }
-            return try fileManager.contentsOfDirectory(
-                at: folderUrlWithSubpath,
-                includingPropertiesForKeys: [],
-                options: [
-                    FileManager.DirectoryEnumerationOptions.skipsPackageDescendants,
-                    FileManager.DirectoryEnumerationOptions.skipsSubdirectoryDescendants,
-                ]
+            let directoryURL = try FileManager.default.url(
+                for: directory,
+                in: domain,
+                appropriateFor: nil,
+                create: false
             )
+            return try readApplications(at: directoryURL, parentPath: parentPath)
         } catch {
             return []
+        }
+    }
+
+    private func readApplications(at url: URL, parentPath: [String]) throws -> [AppGroup] {
+        let childURLs = try FileManager.default.contentsOfDirectory(
+            at: url,
+            includingPropertiesForKeys: []
+        )
+        let appURLs = childURLs.filter { url in
+            url.lastPathComponent.hasSuffix(".app")
+        }
+        let directoryURLs = childURLs.filter {
+            $0.pathExtension.isEmpty && !$0.lastPathComponent.starts(with: ".")
+        }
+
+        let newPath = parentPath + [url.lastPathComponent]
+        let childAppGroups = directoryURLs.compactMap { url in
+            (try? readApplications(at: url, parentPath: newPath)) ?? []
+        }.flatMap {
+            $0
+        }
+
+        let appGroupPath = parentPath + [url.lastPathComponent]
+        let appGroup = AppGroup(
+            name: appGroupPath.joined(separator: " → "),
+            apps: apps(at: appURLs)
+        )
+        let appGroups = [appGroup] + childAppGroups
+
+        return appGroups.filter { group in
+            !group.apps.isEmpty
         }
     }
 
