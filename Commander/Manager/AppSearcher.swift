@@ -21,13 +21,24 @@ final class AppSearcher {
     let shortcutsAppManager = ShortcutsAppManager()
 
     func search() -> SearchResult {
-        let localAppsURLs = readApplications(directory: .applicationDirectory, domain: .localDomainMask)
-        let systemAppsURLs = readApplications(directory: .applicationDirectory, domain: .systemDomainMask)
+        let localAppsURLs = readApplications(
+            directory: .applicationDirectory,
+            domain: .localDomainMask
+        )
         let utilitiesURLs = readApplications(
             directory: .applicationDirectory,
             domain: .systemDomainMask,
             subpath: "/Utilities"
         )
+        var systemAppsURLs = readApplications(
+            directory: .applicationDirectory,
+            domain: .systemDomainMask
+        )
+
+        if let finderURL = readFinderURL() {
+            systemAppsURLs.append(finderURL)
+        }
+
         return SearchResult(
             shortcuts: shortcutsAppManager.getShortcuts(),
             localApps: apps(at: localAppsURLs),
@@ -92,7 +103,7 @@ final class AppSearcher {
             guard let folderUrlWithSubpath = NSURL(string: folderUrl.path + subpath) as? URL else {
                 return []
             }
-            let applicationUrls = try fileManager.contentsOfDirectory(
+            return try fileManager.contentsOfDirectory(
                 at: folderUrlWithSubpath,
                 includingPropertiesForKeys: [],
                 options: [
@@ -100,9 +111,28 @@ final class AppSearcher {
                     FileManager.DirectoryEnumerationOptions.skipsSubdirectoryDescendants,
                 ]
             )
-            return applicationUrls
         } catch {
             return []
+        }
+    }
+
+    private func readFinderURL() -> URL? {
+        guard let coreServicesURL = try? FileManager.default.url(
+            for: .coreServiceDirectory,
+            in: .systemDomainMask,
+            appropriateFor: nil,
+            create: false
+        ) else {
+            return nil
+        }
+
+        let finderURL = coreServicesURL.appendingPathComponent("Finder.app")
+        let executableExists = FileManager.default.fileExists(atPath: finderURL.path)
+
+        if executableExists {
+            return finderURL
+        } else {
+            return nil
         }
     }
 }
