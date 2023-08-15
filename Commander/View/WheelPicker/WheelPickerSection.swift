@@ -18,8 +18,13 @@ extension WheelPicker {
 
         var body: some View {
             sectionBackground
-            EmptyView().trackingMouse { point in
-                hoverState.set(isHovering: sectionPath.contains(point), at: indexedApp.visualIndex)
+            EmptyView().trackingMouse { update in
+                switch update {
+                case let .moved(newLocation):
+                    hoverState.set(isHovering: sectionPath.contains(newLocation), at: indexedApp.visualIndex)
+                case .exited:
+                    hoverState.set(isHovering: false, at: indexedApp.visualIndex)
+                }
             }
 
             ZStack {

@@ -1,21 +1,38 @@
 import SwiftUI
 
+enum MouseLocationUpdate {
+    case moved(newLocation: NSPoint)
+    case exited
+
+    var point: NSPoint? {
+        switch self {
+        case let .moved(point):
+            return point
+        case .exited:
+            return nil
+        }
+    }
+}
+
 extension View {
     func trackingMouse(
-        onMove: @escaping (_ mouseLocation: NSPoint) -> Void,
+        onUpdate: @escaping (MouseLocationUpdate) -> Void,
         onWindowFrameChange: (() -> Void)? = nil
     ) -> some View {
-        TrackinAreaView(onMove: onMove, onWindowFrameChange: onWindowFrameChange) { self }
+        TrackinAreaView(onUpdate: onUpdate, onWindowFrameChange: onWindowFrameChange) { self }
     }
 
     func trackingMouse(offset: CGFloat, onReachOffset: @escaping () -> Void) -> some View {
         var firstLocation: CGPoint?
 
-        return trackingMouse { mouseLocation in
-            if firstLocation == nil {
-                firstLocation = mouseLocation
+        return trackingMouse { update in
+            guard let point = update.point else {
+                return
             }
-            if let firstLocation = firstLocation, firstLocation.distance(to: mouseLocation) >= offset {
+            if firstLocation == nil {
+                firstLocation = point
+            }
+            if let firstLocation = firstLocation, firstLocation.distance(to: point) >= offset {
                 onReachOffset()
             }
         } onWindowFrameChange: {
@@ -27,34 +44,34 @@ extension View {
 // MARK: - TrackinAreaView
 
 struct TrackinAreaView<Content>: View where Content: View {
-    let onMove: (_ mouseLocation: NSPoint) -> Void
+    let onUpdate: (MouseLocationUpdate) -> Void
     let onWindowFrameChange: (() -> Void)?
     let content: () -> Content
 
     init(
-        onMove: @escaping (_ mouseLocation: NSPoint) -> Void,
+        onUpdate: @escaping (MouseLocationUpdate) -> Void,
         onWindowFrameChange: (() -> Void)?,
         @ViewBuilder content: @escaping () -> Content
     ) {
-        self.onMove = onMove
+        self.onUpdate = onUpdate
         self.onWindowFrameChange = onWindowFrameChange
         self.content = content
     }
 
     var body: some View {
-        TrackingAreaRepresentable(onMove: onMove, onWindowFrameChange: onWindowFrameChange, content: content())
+        TrackingAreaRepresentable(onUpdate: onUpdate, onWindowFrameChange: onWindowFrameChange, content: content())
     }
 }
 
 // MARK: - TrackingAreaRepresentable
 
 struct TrackingAreaRepresentable<Content>: NSViewRepresentable where Content: View {
-    let onMove: (_ mouseLocation: NSPoint) -> Void
+    let onUpdate: (MouseLocationUpdate) -> Void
     let onWindowFrameChange: (() -> Void)?
     let content: Content
 
     func makeNSView(context _: Context) -> NSHostingView<Content> {
-        TrackingNSHostingView(onMove: onMove, onWindowFrameChange: onWindowFrameChange, rootView: content)
+        TrackingNSHostingView(onUpdate: onUpdate, onWindowFrameChange: onWindowFrameChange, rootView: content)
     }
 
     func updateNSView(_: NSHostingView<Content>, context _: Context) {}
@@ -66,11 +83,11 @@ final class TrackingNSHostingView<Content>: NSHostingView<Content> where Content
     // MARK: Lifecycle
 
     init(
-        onMove: @escaping (NSPoint) -> Void,
+        onUpdate: @escaping (MouseLocationUpdate) -> Void,
         onWindowFrameChange: (() -> Void)?,
         rootView: Content
     ) {
-        self.onMove = onMove
+        self.onUpdate = onUpdate
         self.onWindowFrameChange = onWindowFrameChange
         super.init(rootView: rootView)
         setupTrackingArea()
@@ -92,19 +109,20 @@ final class TrackingNSHostingView<Content>: NSHostingView<Content> where Content
         if lastFrameWindow != window?.frame {
             onWindowFrameChange?()
         } else {
-            onMove(convert(event.locationInWindow, from: nil))
+            let point = convert(event.locationInWindow, from: nil)
+            onUpdate(.moved(newLocation: point))
         }
         lastFrameWindow = window?.frame
     }
 
     // MARK: Private
 
-    private let onMove: (NSPoint) -> Void
+    private let onUpdate: (MouseLocationUpdate) -> Void
     private let onWindowFrameChange: (() -> Void)?
     private var lastFrameWindow: NSRect?
 
     private func setupTrackingArea() {
-        let options: NSTrackingArea.Options = [.mouseMoved, .activeAlways, .inVisibleRect]
+        let options: NSTrackingArea.Options = [.mouseMoved, .activeAlways, .inVisibleRect, .mouseEnteredAndExited]
         let trackingArea = NSTrackingArea(
             rect: .zero,
             options: options,
@@ -112,5 +130,10 @@ final class TrackingNSHostingView<Content>: NSHostingView<Content> where Content
             userInfo: nil
         )
         addTrackingArea(trackingArea)
+    }
+
+    override func mouseExited(with event: NSEvent) {
+        super.mouseExited(with: event)
+        onUpdate(.exited)
     }
 }
