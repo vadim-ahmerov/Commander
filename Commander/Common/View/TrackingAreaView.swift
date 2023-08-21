@@ -122,7 +122,16 @@ final class TrackingNSHostingView<Content>: NSHostingView<Content> where Content
     private var lastFrameWindow: NSRect?
 
     private func setupTrackingArea() {
-        let options: NSTrackingArea.Options = [.mouseMoved, .activeAlways, .inVisibleRect, .mouseEnteredAndExited]
+        var options: NSTrackingArea.Options = [
+            .mouseMoved,
+            .activeAlways,
+            .inVisibleRect,
+        ]
+
+        if #available(macOS 13, *) {
+            options.insert(.mouseEnteredAndExited)
+        }
+
         let trackingArea = NSTrackingArea(
             rect: .zero,
             options: options,
