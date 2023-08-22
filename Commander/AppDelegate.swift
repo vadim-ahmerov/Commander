@@ -29,6 +29,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         #if DEBUG
             openSettings()
         #endif
+
+        settingsWindow.delegate = self
     }
 
     func applicationDidBecomeActive(_: Notification) {
@@ -267,5 +269,15 @@ extension AppDelegate {
         window.makeKeyAndOrderFront(nil)
         window.orderFrontRegardless()
         NSApp.activate(ignoringOtherApps: true)
+    }
+}
+
+extension AppDelegate: NSWindowDelegate {
+    func windowWillClose(_ notification: Notification) {
+        NSApp.setActivationPolicy(.accessory)
+    }
+
+    func windowDidBecomeKey(_ notification: Notification) {
+        NSApp.setActivationPolicy(.regular)
     }
 }

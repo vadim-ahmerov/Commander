@@ -28,15 +28,14 @@ extension SettingsView {
                 diContainer.shortcutNotifier.modifiers = enabledModifiers
             }.onChange(of: showMenuBarItem) { showMenuBarItem in
                 diContainer.menuBarItemManager.set(isVisible: showMenuBarItem)
+            }.onChange(of: launchOnLogin) { launchOnLogin in
+                diContainer.autoLaunchManager.configureAutoLaunch(enabled: launchOnLogin)
             }.onAppear {
                 isCommandEnabled = diContainer.shortcutNotifier.modifiers.contains(.command)
                 isOptionEnabled = diContainer.shortcutNotifier.modifiers.contains(.option)
                 isControlEnabled = diContainer.shortcutNotifier.modifiers.contains(.control)
                 isShiftEnabled = diContainer.shortcutNotifier.modifiers.contains(.shift)
                 isFunctionEnabled = diContainer.shortcutNotifier.modifiers.contains(.function)
-            }
-            .onChange(of: launchOnLogin) { launchOnLogin in
-                diContainer.autoLaunchManager.configureAutoLaunch(enabled: launchOnLogin)
             }
         }
 
