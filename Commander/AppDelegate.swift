@@ -25,7 +25,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }.store(in: &cancellables)
         openSettingsIfNeeded()
         NSApplication.shared.mainMenu = AppMenu()
-        configureAutoLaunch()
 
         #if DEBUG
             openSettings()
@@ -148,21 +147,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         window.titleVisibility = .hidden
 
         return window
-    }
-
-    private func configureAutoLaunch() {
-        let launcherAppID = "com.va.commander.launcher"
-        let runningApps = NSWorkspace.shared.runningApplications
-        let isRunning = runningApps.contains {
-            $0.bundleIdentifier == launcherAppID
-        }
-
-        SMLoginItemSetEnabled(launcherAppID as CFString, true)
-
-        if isRunning {
-            DistributedNotificationCenter.default()
-                .post(name: .killLauncher, object: Bundle.main.bundleIdentifier!)
-        }
     }
 
     private func openSettingsIfNeeded() {

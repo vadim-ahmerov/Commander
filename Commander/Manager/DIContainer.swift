@@ -9,6 +9,7 @@ final class DIContainer {
     let imageProvider: ImageProvider
     let appRatingManager: AppRatingManager
     let menuBarItemManager: MenuBarItemManager
+    let autoLaunchManager: AutoLaunchManager
 
     init(statusItem: NSStatusItem) {
         appsManager = AppsManager(bookmarksManager: BookmarksManager())
@@ -16,6 +17,7 @@ final class DIContainer {
         imageProvider = ImageProvider()
         appRatingManager = AppRatingManager()
         menuBarItemManager = MenuBarItemManager(statusItem: statusItem)
+        autoLaunchManager = AutoLaunchManager()
     }
 
     static var shared: DIContainer {

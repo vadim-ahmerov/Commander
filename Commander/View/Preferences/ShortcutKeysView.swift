@@ -14,7 +14,8 @@ extension SettingsView {
                     Toggle("fn", isOn: $isFunctionEnabled)
                 }
                 Toggle("Show only after mouse move", isOn: $showOnMouseMove)
-                Toggle("Show menu bar item", isOn: $showMenuBarItem)
+                Toggle("Show menu bar icon", isOn: $showMenuBarItem)
+                Toggle("Launch on Login", isOn: $launchOnLogin)
             }.onChange(of: isOptionEnabled) { _ in
                 diContainer.shortcutNotifier.modifiers = enabledModifiers
             }.onChange(of: isControlEnabled) { _ in
@@ -34,6 +35,9 @@ extension SettingsView {
                 isShiftEnabled = diContainer.shortcutNotifier.modifiers.contains(.shift)
                 isFunctionEnabled = diContainer.shortcutNotifier.modifiers.contains(.function)
             }
+            .onChange(of: launchOnLogin) { launchOnLogin in
+                diContainer.autoLaunchManager.configureAutoLaunch(enabled: launchOnLogin)
+            }
         }
 
         // MARK: Private
@@ -41,6 +45,7 @@ extension SettingsView {
         private let diContainer = DIContainer.shared
         @AppStorage(AppStorageKey.showOnMouseMove) private var showOnMouseMove = true
         @AppStorage(AppStorageKey.showMenuBarItem) private var showMenuBarItem = false
+        @AppStorage(AppStorageKey.launchOnLogin) private var launchOnLogin = false
         @State private var isCommandEnabled = false
         @State private var isOptionEnabled = false
         @State private var isControlEnabled = false
