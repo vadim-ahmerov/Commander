@@ -215,6 +215,7 @@ extension AppDelegate {
         settingsWindow.makeKeyAndOrderFront(nil)
         settingsWindow.orderFrontRegardless()
         NSApp.activate(ignoringOtherApps: true)
+        NSApp.setActivationPolicy(.regular)
     }
 
     @objc
@@ -274,7 +275,7 @@ extension AppDelegate {
 
 extension AppDelegate: NSWindowDelegate {
     func windowWillClose(_ notification: Notification) {
-        NSApp.setActivationPolicy(.accessory)
+        NSApp.setActivationPolicy(.prohibited)
     }
 
     func windowDidBecomeKey(_ notification: Notification) {
