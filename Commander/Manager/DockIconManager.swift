@@ -1,15 +1,9 @@
-//
-//  DockIconManager.swift
-//  Commander
-//
-//  Created by Vadim Ahmerov on 28.08.2023.
-//
-
 import AppKit
 import SwiftUI
 
 final class DockIconManager {
-    @AppStorage(AppStorageKey.showDockIcon) private var showDockIcon = true
+    // MARK: Internal
+
     var settingsWindow: NSWindow? {
         didSet {
             updateIconVisibility()
@@ -26,4 +20,8 @@ final class DockIconManager {
             NSApp.activate(ignoringOtherApps: true)
         }
     }
+
+    // MARK: Private
+
+    @AppStorage(AppStorageKey.showDockIcon) private var showDockIcon = true
 }

@@ -16,6 +16,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     // MARK: Internal
 
+    let diContainer: DIContainer
+
     func applicationDidFinishLaunching(_: Notification) {
         window = Self.makeWindow(diContainer: diContainer)
         popover = Self.makePopover(diContainer: diContainer)
@@ -27,7 +29,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         NSApplication.shared.mainMenu = AppMenu()
 
         #if DEBUG
-            openSettings()
+        openSettings()
         #endif
     }
 
@@ -39,7 +41,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     @UserDefault("first launch") private var firstLaunch = true
 
-    let diContainer: DIContainer
     private let statusItem: NSStatusItem
     private var window: NSWindow?
     private var popover: NSPopover?

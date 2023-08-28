@@ -14,28 +14,28 @@ public struct UserDefault<Value> {
     }
 }
 
-public extension UserDefault {
-    init(wrappedValue: Value, _ key: String, store: UserDefaults = .standard) where Value == Bool {
+extension UserDefault {
+    public init(wrappedValue: Value, _ key: String, store: UserDefaults = .standard) where Value == Bool {
         self.init(defaultValue: wrappedValue, key: key, store: store)
     }
 
-    init(wrappedValue: Value, _ key: String, store: UserDefaults = .standard) where Value == Int {
+    public init(wrappedValue: Value, _ key: String, store: UserDefaults = .standard) where Value == Int {
         self.init(defaultValue: wrappedValue, key: key, store: store)
     }
 
-    init(wrappedValue: Value, _ key: String, store: UserDefaults = .standard) where Value == Double {
+    public init(wrappedValue: Value, _ key: String, store: UserDefaults = .standard) where Value == Double {
         self.init(defaultValue: wrappedValue, key: key, store: store)
     }
 
-    init(wrappedValue: Value, _ key: String, store: UserDefaults = .standard) where Value == String {
+    public init(wrappedValue: Value, _ key: String, store: UserDefaults = .standard) where Value == String {
         self.init(defaultValue: wrappedValue, key: key, store: store)
     }
 
-    init(wrappedValue: Value, _ key: String, store: UserDefaults = .standard) where Value == URL {
+    public init(wrappedValue: Value, _ key: String, store: UserDefaults = .standard) where Value == URL {
         self.init(defaultValue: wrappedValue, key: key, store: store)
     }
 
-    init(wrappedValue: Value, _ key: String, store: UserDefaults = .standard) where Value == Data {
+    public init(wrappedValue: Value, _ key: String, store: UserDefaults = .standard) where Value == Data {
         self.init(defaultValue: wrappedValue, key: key, store: store)
     }
 
@@ -51,8 +51,8 @@ public extension UserDefault {
     }
 }
 
-public extension UserDefault where Value: Codable {
-    init(wrappedValue defaultValue: Value, _ key: String, store: UserDefaults = .standard) {
+extension UserDefault where Value: Codable {
+    public init(wrappedValue defaultValue: Value, _ key: String, store: UserDefaults = .standard) {
         get = {
             let data = store.value(forKey: key) as? Data
             return data.flatMap {
@@ -67,28 +67,28 @@ public extension UserDefault where Value: Codable {
     }
 }
 
-public extension UserDefault where Value: ExpressibleByNilLiteral {
-    init(_ key: String, store: UserDefaults = .standard) where Value == Bool? {
+extension UserDefault where Value: ExpressibleByNilLiteral {
+    public init(_ key: String, store: UserDefaults = .standard) where Value == Bool? {
         self.init(wrappedType: Bool.self, key: key, store: store)
     }
 
-    init(_ key: String, store: UserDefaults = .standard) where Value == Int? {
+    public init(_ key: String, store: UserDefaults = .standard) where Value == Int? {
         self.init(wrappedType: Int.self, key: key, store: store)
     }
 
-    init(_ key: String, store: UserDefaults = .standard) where Value == Double? {
+    public init(_ key: String, store: UserDefaults = .standard) where Value == Double? {
         self.init(wrappedType: Double.self, key: key, store: store)
     }
 
-    init(_ key: String, store: UserDefaults = .standard) where Value == String? {
+    public init(_ key: String, store: UserDefaults = .standard) where Value == String? {
         self.init(wrappedType: String.self, key: key, store: store)
     }
 
-    init(_ key: String, store: UserDefaults = .standard) where Value == URL? {
+    public init(_ key: String, store: UserDefaults = .standard) where Value == URL? {
         self.init(wrappedType: URL.self, key: key, store: store)
     }
 
-    init(_ key: String, store: UserDefaults = .standard) where Value == Data? {
+    public init(_ key: String, store: UserDefaults = .standard) where Value == Data? {
         self.init(wrappedType: Data.self, key: key, store: store)
     }
 
@@ -110,16 +110,16 @@ public extension UserDefault where Value: ExpressibleByNilLiteral {
     }
 }
 
-public extension UserDefault where Value: RawRepresentable {
-    init(wrappedValue: Value, _ key: String, store: UserDefaults = .standard) where Value.RawValue == String {
+extension UserDefault where Value: RawRepresentable {
+    public init(wrappedValue: Value, _ key: String, store: UserDefaults = .standard) where Value.RawValue == String {
         self.init(defaultValue: wrappedValue, key: key, store: store)
     }
 
-    init(wrappedValue: Value, _ key: String, store: UserDefaults = .standard) where Value.RawValue == Int {
+    public init(wrappedValue: Value, _ key: String, store: UserDefaults = .standard) where Value.RawValue == Int {
         self.init(defaultValue: wrappedValue, key: key, store: store)
     }
 
-    init(wrappedValue: Value, _ key: String, store: UserDefaults = .standard) where Value.RawValue == UInt {
+    public init(wrappedValue: Value, _ key: String, store: UserDefaults = .standard) where Value.RawValue == UInt {
         self.init(defaultValue: wrappedValue, key: key, store: store)
     }
 
@@ -141,12 +141,12 @@ public extension UserDefault where Value: RawRepresentable {
     }
 }
 
-public extension UserDefault {
-    init<R>(_ key: String, store: UserDefaults = .standard) where Value == R?, R: RawRepresentable, R.RawValue == Int {
+extension UserDefault {
+    public init<R>(_ key: String, store: UserDefaults = .standard) where Value == R?, R: RawRepresentable, R.RawValue == Int {
         self.init(key: key, store: store)
     }
 
-    init<R>(_ key: String, store: UserDefaults = .standard) where Value == R?, R: RawRepresentable, R.RawValue == String {
+    public init<R>(_ key: String, store: UserDefaults = .standard) where Value == R?, R: RawRepresentable, R.RawValue == String {
         self.init(key: key, store: store)
     }
 

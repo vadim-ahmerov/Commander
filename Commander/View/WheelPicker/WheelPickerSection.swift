@@ -20,7 +20,7 @@ extension WheelPicker {
             sectionBackground
             EmptyView().trackingMouse { update in
                 switch update {
-                case let .moved(newLocation):
+                case .moved(let newLocation):
                     hoverState.set(isHovering: sectionPath.contains(newLocation), at: indexedApp.visualIndex)
                 case .exited:
                     hoverState.set(isHovering: false, at: indexedApp.visualIndex)
@@ -47,7 +47,7 @@ extension WheelPicker {
             switch dragState {
             case .inactive:
                 return nil
-            case let .active(appVisualIndex, offset):
+            case .active(let appVisualIndex, let offset):
                 if appVisualIndex == indexedApp.visualIndex {
                     return offset
                 } else {

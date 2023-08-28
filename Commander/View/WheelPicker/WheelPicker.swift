@@ -21,7 +21,7 @@ struct WheelPicker: View {
 
         func isDragging(appVisualIndex: Int) -> Bool {
             switch self {
-            case let .active(index, _):
+            case .active(let index, _):
                 return index == appVisualIndex
             case .inactive:
                 return false
@@ -72,7 +72,7 @@ struct WheelPicker: View {
             guard state == .inactive else {
                 return
             }
-            self.apps.send(indexedApps.sorted(by: \.visualIndex).map(\.app))
+            apps.send(indexedApps.sorted(by: \.visualIndex).map(\.app))
         }
         .onDrop(of: [UTType.fileURL.identifier], isTargeted: $isTargetedForDrop) { providers in
             providers.forEach { provider in
@@ -130,11 +130,11 @@ struct WheelPicker: View {
         ) { visualIndex in
             guard
                 let toApp = indexedApps
-                .enumerated()
-                .first(where: { visualIndex == $0.element.visualIndex }),
+                    .enumerated()
+                    .first(where: { visualIndex == $0.element.visualIndex }),
                 let fromApp = indexedApps
-                .enumerated()
-                .first(where: { indexedApps[index].visualIndex == $0.element.visualIndex })
+                    .enumerated()
+                    .first(where: { indexedApps[index].visualIndex == $0.element.visualIndex })
             else {
                 assertionFailure()
                 return

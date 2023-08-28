@@ -31,7 +31,7 @@ extension SettingsView {
                 diContainer.menuBarItemManager.set(isVisible: showMenuBarItem)
             }.onChange(of: launchOnLogin) { launchOnLogin in
                 diContainer.autoLaunchManager.configureAutoLaunch(enabled: launchOnLogin)
-            }.onChange(of: showDockIcon) { showDockIcon in
+            }.onChange(of: showDockIcon) { _ in
                 diContainer.dockIconManager.updateIconVisibility()
             }.onAppear {
                 isCommandEnabled = diContainer.shortcutNotifier.modifiers.contains(.command)

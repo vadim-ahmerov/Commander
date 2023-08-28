@@ -44,8 +44,8 @@ extension App: Identifiable {
     }
 }
 
-private extension URL {
-    var kind: App.Kind {
+extension URL {
+    fileprivate var kind: App.Kind {
         switch scheme {
         case "shortcuts":
             return .shortcut

@@ -3,11 +3,11 @@ import ApplicationServices
 import Foundation
 
 final class AppSearcher {
+    // MARK: Internal
+
     enum SearchError: Error {
         case failedToInitializeFileEnumerator
     }
-
-    // MARK: Internal
 
     let shortcutsAppManager = ShortcutsAppManager()
 
@@ -132,12 +132,14 @@ final class AppSearcher {
     }
 
     private func readFinderURL() -> URL? {
-        guard let coreServicesURL = try? FileManager.default.url(
-            for: .coreServiceDirectory,
-            in: .systemDomainMask,
-            appropriateFor: nil,
-            create: false
-        ) else {
+        guard
+            let coreServicesURL = try? FileManager.default.url(
+                for: .coreServiceDirectory,
+                in: .systemDomainMask,
+                appropriateFor: nil,
+                create: false
+            ) else
+        {
             return nil
         }
 

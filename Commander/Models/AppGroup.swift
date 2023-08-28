@@ -1,3 +1,5 @@
+// MARK: - AppGroup
+
 struct AppGroup {
     let name: String
     let apps: [App]

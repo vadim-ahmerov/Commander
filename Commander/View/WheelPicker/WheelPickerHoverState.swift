@@ -18,7 +18,7 @@ extension WheelPicker {
 
         var hoveringAppIndex: Int? {
             switch self {
-            case let .enabled(hoverDictionary):
+            case .enabled(let hoverDictionary):
                 return hoverDictionary.first(where: { $0.value })?.key
             case .disabled:
                 return nil
@@ -27,7 +27,7 @@ extension WheelPicker {
 
         func isHovering(appIndex: Int) -> Bool {
             switch self {
-            case let .enabled(hoverDictionary):
+            case .enabled(let hoverDictionary):
                 return hoverDictionary[appIndex] ?? false
             case .disabled:
                 return false
@@ -36,7 +36,7 @@ extension WheelPicker {
 
         mutating func set(isHovering: Bool, at appIndex: Int) {
             switch self {
-            case var .enabled(hoverDictionary):
+            case .enabled(var hoverDictionary):
                 hoverDictionary[appIndex] = isHovering
                 self = .enabled(hoverDictionary)
             case .disabled:

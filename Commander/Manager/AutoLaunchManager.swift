@@ -1,10 +1,3 @@
-//
-//  AutoLaunchManager.swift
-//  Commander
-//
-//  Created by Vadim Ahmerov on 22.08.2023.
-//
-
 import AppKit
 import ServiceManagement
 

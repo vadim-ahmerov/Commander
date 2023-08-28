@@ -26,8 +26,8 @@ struct CommanderView: View {
                     let keyDownDate = shortcutTriggerDate,
                     -keyDownDate.timeIntervalSinceNow > 0.2
                 {
-                    self.diContainer.appsManager.open(app: app)
-                    self.shortcutTriggerDate = nil
+                    diContainer.appsManager.open(app: app)
+                    shortcutTriggerDate = nil
                 }
             }
         }.opacity(showOnMouseMove && isHidden ? 0 : 1).overlay {

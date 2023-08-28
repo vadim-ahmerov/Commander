@@ -1,12 +1,14 @@
 import SwiftUI
 
+// MARK: - MouseLocationUpdate
+
 enum MouseLocationUpdate {
     case moved(newLocation: NSPoint)
     case exited
 
     var point: NSPoint? {
         switch self {
-        case let .moved(point):
+        case .moved(let point):
             return point
         case .exited:
             return nil
@@ -115,6 +117,11 @@ final class TrackingNSHostingView<Content>: NSHostingView<Content> where Content
         lastFrameWindow = window?.frame
     }
 
+    override func mouseExited(with event: NSEvent) {
+        super.mouseExited(with: event)
+        onUpdate(.exited)
+    }
+
     // MARK: Private
 
     private let onUpdate: (MouseLocationUpdate) -> Void
@@ -139,10 +146,5 @@ final class TrackingNSHostingView<Content>: NSHostingView<Content> where Content
             userInfo: nil
         )
         addTrackingArea(trackingArea)
-    }
-
-    override func mouseExited(with event: NSEvent) {
-        super.mouseExited(with: event)
-        onUpdate(.exited)
     }
 }

@@ -48,6 +48,8 @@ struct SettingsSearchField: View {
     }
 }
 
+// MARK: SettingsSearchField.TextField
+
 extension SettingsSearchField {
     struct TextField: NSViewRepresentable {
         final class Coordinator: NSObject, NSTextFieldDelegate {

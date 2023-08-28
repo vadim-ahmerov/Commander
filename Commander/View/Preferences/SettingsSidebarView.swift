@@ -10,7 +10,7 @@ struct SettingsSidebarView: View {
             sidebarContent
             sidebarTopGradient
         }.onReceive(diContainer.appsManager.appGroups) { allApps in
-            self.appGroups = allApps
+            appGroups = allApps
         }.onChange(of: enteredURL) { url in
             guard let url = url else {
                 return
@@ -137,9 +137,9 @@ struct SettingsSidebarView: View {
                         if maxAppsCountReached, enable {
                             maxAppsCountSheetIsShowing = true
                         } else if !self.apps.contains(app), enable {
-                            self.diContainer.appsManager.apps.value.append(app)
+                            diContainer.appsManager.apps.value.append(app)
                         } else {
-                            self.diContainer.appsManager.apps.value.removeAll(where: { $0 == app })
+                            diContainer.appsManager.apps.value.removeAll(where: { $0 == app })
                         }
                     })) {
                         Label {
