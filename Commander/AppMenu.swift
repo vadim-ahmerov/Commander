@@ -17,8 +17,8 @@ final class AppMenu: NSMenu {
         super.init(title: title)
         let menu = NSMenuItem()
         menu.submenu = NSMenu(title: "Main")
-        menu.submenu?.items = Self.allItems()
-        items = [menu]
+        menu.submenu?.items = allItems()
+        items = [menu, windowItem()]
     }
 
     @available(*, unavailable)
@@ -28,7 +28,7 @@ final class AppMenu: NSMenu {
 
     // MARK: Internal
 
-    static func allItems() -> [NSMenuItem] {
+    func allItems() -> [NSMenuItem] {
         [
             NSMenuItem(title: "Select All", action: #selector(NSText.selectAll(_:)), keyEquivalent: "a"),
             NSMenuItem(title: "Copy", action: #selector(NSText.copy(_:)), keyEquivalent: "c"),
@@ -45,5 +45,33 @@ final class AppMenu: NSMenu {
                 keyEquivalent: "q"
             ),
         ]
+    }
+
+    func windowItem() -> NSMenuItem {
+        let windowMenu = NSMenuItem()
+        windowMenu.submenu = NSMenu(title: "Window")
+        windowMenu.submenu?.addItem(AlwaysEnabledMenuItem(
+            title: "Show",
+            action: #selector(AppDelegate.openSettings),
+            keyEquivalent: ""
+        ))
+        windowMenu.submenu?.addItem(NSMenuItem(
+            title: "Minimize",
+            action: #selector(NSWindow.miniaturize(_:)),
+            keyEquivalent: "m"
+        ))
+        windowMenu.submenu?.addItem(NSMenuItem(title: "Zoom", action: #selector(NSWindow.performZoom(_:)), keyEquivalent: ""))
+        return windowMenu
+    }
+}
+
+// MARK: - AlwaysEnabledMenuItem
+
+private final class AlwaysEnabledMenuItem: NSMenuItem {
+    override var isEnabled: Bool {
+        get {
+            true
+        }
+        set {}
     }
 }

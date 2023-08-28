@@ -38,7 +38,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         openSettings()
     }
 
-    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+    func applicationShouldHandleReopen(_: NSApplication, hasVisibleWindows _: Bool) -> Bool {
         true
     }
 
@@ -200,6 +200,20 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 }
 
 extension AppDelegate {
+    // MARK: Internal
+
+    @objc
+    func openSettings() {
+        print(#function, "started")
+        diContainer.appsManager.updateApps()
+        settingsWindow.makeKeyAndOrderFront(nil)
+        settingsWindow.orderFrontRegardless()
+        NSApp.activate(ignoringOtherApps: true)
+        print(#function, "Finished")
+    }
+
+    // MARK: Private
+
     private static func makeWindow<Content: View>(title: String, swiftUIView: Content, diContainer _: DIContainer) -> NSWindow {
         let controller = NSHostingController(
             rootView: swiftUIView
@@ -212,16 +226,6 @@ extension AppDelegate {
     @objc
     private func quit() {
         NSApp.terminate(nil)
-    }
-
-    @objc
-    private func openSettings() {
-        print(#function, "started")
-        diContainer.appsManager.updateApps()
-        settingsWindow.makeKeyAndOrderFront(nil)
-        settingsWindow.orderFrontRegardless()
-        NSApp.activate(ignoringOtherApps: true)
-        print(#function, "Finished")
     }
 
     @objc
