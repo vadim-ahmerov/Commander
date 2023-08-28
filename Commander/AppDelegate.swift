@@ -29,8 +29,6 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         #if DEBUG
             openSettings()
         #endif
-
-        settingsWindow.delegate = self
     }
 
     func applicationDidBecomeActive(_: Notification) {
@@ -130,7 +128,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         return statusBarItem
     }
 
-    private static func makeSettingsWindow(diContainer _: DIContainer) -> NSWindow {
+    private static func makeSettingsWindow(diContainer: DIContainer) -> NSWindow {
         let controller = NSHostingController(
             rootView: SettingsView()
         )
@@ -147,6 +145,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         ]
         window.toolbar?.isVisible = false
         window.titleVisibility = .hidden
+        diContainer.dockIconManager.settingsWindow = window
 
         return window
     }
@@ -215,7 +214,6 @@ extension AppDelegate {
         settingsWindow.makeKeyAndOrderFront(nil)
         settingsWindow.orderFrontRegardless()
         NSApp.activate(ignoringOtherApps: true)
-        NSApp.setActivationPolicy(.regular)
     }
 
     @objc
@@ -270,15 +268,5 @@ extension AppDelegate {
         window.makeKeyAndOrderFront(nil)
         window.orderFrontRegardless()
         NSApp.activate(ignoringOtherApps: true)
-    }
-}
-
-extension AppDelegate: NSWindowDelegate {
-    func windowWillClose(_ notification: Notification) {
-        NSApp.setActivationPolicy(.prohibited)
-    }
-
-    func windowDidBecomeKey(_ notification: Notification) {
-        NSApp.setActivationPolicy(.regular)
     }
 }

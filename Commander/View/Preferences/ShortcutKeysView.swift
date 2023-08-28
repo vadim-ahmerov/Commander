@@ -15,6 +15,7 @@ extension SettingsView {
                 }
                 Toggle("Show only after mouse move", isOn: $showOnMouseMove)
                 Toggle("Show menu bar icon", isOn: $showMenuBarItem)
+                Toggle("Show dock icon", isOn: $showDockIcon)
                 Toggle("Launch on Login", isOn: $launchOnLogin)
             }.onChange(of: isOptionEnabled) { _ in
                 diContainer.shortcutNotifier.modifiers = enabledModifiers
@@ -30,6 +31,8 @@ extension SettingsView {
                 diContainer.menuBarItemManager.set(isVisible: showMenuBarItem)
             }.onChange(of: launchOnLogin) { launchOnLogin in
                 diContainer.autoLaunchManager.configureAutoLaunch(enabled: launchOnLogin)
+            }.onChange(of: showDockIcon) { showDockIcon in
+                diContainer.dockIconManager.updateIconVisibility()
             }.onAppear {
                 isCommandEnabled = diContainer.shortcutNotifier.modifiers.contains(.command)
                 isOptionEnabled = diContainer.shortcutNotifier.modifiers.contains(.option)
@@ -44,6 +47,7 @@ extension SettingsView {
         private let diContainer = DIContainer.shared
         @AppStorage(AppStorageKey.showOnMouseMove) private var showOnMouseMove = true
         @AppStorage(AppStorageKey.showMenuBarItem) private var showMenuBarItem = false
+        @AppStorage(AppStorageKey.showDockIcon) private var showDockIcon = true
         @AppStorage(AppStorageKey.launchOnLogin) private var launchOnLogin = false
         @State private var isCommandEnabled = false
         @State private var isOptionEnabled = false
