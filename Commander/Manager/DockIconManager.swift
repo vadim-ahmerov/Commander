@@ -18,6 +18,7 @@ final class DockIconManager {
             NSApp.setActivationPolicy(.accessory)
             settingsWindow?.canHide = true
             NSApp.activate(ignoringOtherApps: true)
+            settingsWindow?.makeKeyAndOrderFront(nil)
         }
     }
 

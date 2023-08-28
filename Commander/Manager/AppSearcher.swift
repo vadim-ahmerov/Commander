@@ -34,6 +34,10 @@ final class AppSearcher {
             domain: .systemDomainMask,
             parentPath: ["System"]
         ))
+        print(
+            "Finished searching, apps count =",
+            groups.map(\.apps).reduce([], +).count
+        )
 
         return groups
     }
