@@ -28,9 +28,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         openSettingsIfNeeded()
         NSApplication.shared.mainMenu = AppMenu()
 
-        #if DEBUG
         openSettings()
-        #endif
     }
 
     func applicationDidBecomeActive(_: Notification) {
