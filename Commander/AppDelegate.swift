@@ -34,7 +34,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationDidBecomeActive(_: Notification) {
+        print(#function)
         openSettings()
+    }
+
+    func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
+        true
     }
 
     // MARK: Private
@@ -211,10 +216,12 @@ extension AppDelegate {
 
     @objc
     private func openSettings() {
+        print(#function, "started")
         diContainer.appsManager.updateApps()
         settingsWindow.makeKeyAndOrderFront(nil)
         settingsWindow.orderFrontRegardless()
         NSApp.activate(ignoringOtherApps: true)
+        print(#function, "Finished")
     }
 
     @objc
