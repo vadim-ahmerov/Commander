@@ -25,15 +25,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         diContainer.shortcutNotifier.$shortcutTriggered.sink { [weak self] isTriggered in
             self?.shortcutStateUpdated(isTriggered: isTriggered)
         }.store(in: &cancellables)
-        openSettingsIfNeeded()
         NSApplication.shared.mainMenu = AppMenu()
 
-        openSettings()
+        openSettingsIfNeeded()
     }
 
     func applicationDidBecomeActive(_: Notification) {
         print(#function)
-        openSettings()
+        if !diContainer.shortcutNotifier.shortcutTriggered {
+            openSettings()
+        }
     }
 
     func applicationShouldHandleReopen(_: NSApplication, hasVisibleWindows _: Bool) -> Bool {
@@ -155,7 +156,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     private func openSettingsIfNeeded() {
-        guard firstLaunch else {
+        guard firstLaunch || !diContainer.menuBarItemManager.showMenuBarItem else {
             return
         }
         firstLaunch = false

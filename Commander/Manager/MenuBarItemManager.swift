@@ -19,5 +19,5 @@ final class MenuBarItemManager {
     // MARK: Private
 
     private let statusItem: NSStatusItem
-    @AppStorage(AppStorageKey.showMenuBarItem) private var showMenuBarItem = false
+    @AppStorage(AppStorageKey.showMenuBarItem) var showMenuBarItem = false
 }
