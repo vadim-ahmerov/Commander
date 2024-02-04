@@ -40,7 +40,7 @@ final class AppsManager {
             switch app.kind {
             case .shortcut:
                 searcher.shortcutsAppManager.run(app: app)
-            case .file, .app:
+            case .file, .app, .link:
                 NSWorkspace.shared.open(app.url)
             }
         }

@@ -17,6 +17,8 @@ struct App: Codable, Equatable, Hashable {
             name = url.deletingPathExtension().lastPathComponent
         case .file, .shortcut:
             name = url.lastPathComponent
+        case .link:
+            name = url.host ?? url.absoluteString
         }
     }
 
@@ -26,6 +28,7 @@ struct App: Codable, Equatable, Hashable {
         case shortcut
         case app
         case file
+        case link
     }
 
     let url: URL
@@ -49,6 +52,8 @@ extension URL {
         switch scheme {
         case "shortcuts":
             return .shortcut
+        case "http", "https":
+            return .link
         default:
             switch lastPathComponent {
             case "app":

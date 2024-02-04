@@ -24,6 +24,13 @@ final class ImageProvider {
             Image(nsImage: nsImage(for: app.url, preferredSize: preferredSize))
                 .resizable()
                 .frame(width: preferredSize, height: preferredSize)
+        case .link:
+            Image(systemName: "link")
+                .renderingMode(.template)
+                .resizable()
+                .foregroundColor(.secondary)
+                .frame(width: preferredSize * 0.8, height: preferredSize * 0.8)
+                .frame(width: preferredSize, height: preferredSize)
         }
     }
 
