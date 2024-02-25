@@ -17,6 +17,7 @@ extension SettingsView {
                 Toggle("Show menu bar icon", isOn: $showMenuBarItem)
                 Toggle("Show dock icon", isOn: $showDockIcon)
                 Toggle("Launch on Login", isOn: $launchOnLogin)
+                Toggle("Enable Haptic Feedback", isOn: $hapticFeedbackEnabled)
             }.onChange(of: isOptionEnabled) { _ in
                 diContainer.shortcutNotifier.modifiers = enabledModifiers
             }.onChange(of: isControlEnabled) { _ in
@@ -49,6 +50,7 @@ extension SettingsView {
         @AppStorage(AppStorageKey.showMenuBarItem) private var showMenuBarItem = false
         @AppStorage(AppStorageKey.showDockIcon) private var showDockIcon = true
         @AppStorage(AppStorageKey.launchOnLogin) private var launchOnLogin = false
+        @AppStorage(AppStorageKey.hapticFeedbackEnabled) private var hapticFeedbackEnabled = true
         @State private var isCommandEnabled = false
         @State private var isOptionEnabled = false
         @State private var isControlEnabled = false

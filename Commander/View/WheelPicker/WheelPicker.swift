@@ -28,10 +28,12 @@ struct WheelPicker: View {
             }
         }
     }
-
-    private let diContainer = DIContainer.shared
+    
     let apps: CurrentValueSubject<[App], Never>
     @Binding var hoverState: HoverState
+
+    private let diContainer = DIContainer.shared
+
     private var textInTheMiddle: String? {
         if let hoverIndex = hoverState.hoveringAppIndex, indexedApps.indices.contains(hoverIndex) {
             return indexedApps[hoverIndex].app.name
@@ -94,6 +96,11 @@ struct WheelPicker: View {
             }
         }
         .opacity(isTargetedForDrop ? 0.8 : 1).padding(6).frame(width: size, height: size)
+        .onChange(of: hoverState.hoveringAppIndex) { index in
+            if index != nil, hapticFeedbackEnabled {
+                NSHapticFeedbackManager.defaultPerformer.perform(.generic, performanceTime: .default)
+            }
+        }
     }
 
     // MARK: Private
@@ -101,6 +108,7 @@ struct WheelPicker: View {
     @State private var indexedApps = [IndexedApp]()
     @State private var dragState = DragState.inactive
     @State private var sectionAngle: CGFloat = 0
+    @AppStorage(AppStorageKey.hapticFeedbackEnabled) private var hapticFeedbackEnabled = true
 
     private var sections: some View {
         GeometryReader { proxy in

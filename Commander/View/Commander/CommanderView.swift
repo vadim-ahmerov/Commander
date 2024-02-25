@@ -28,6 +28,7 @@ struct CommanderView: View {
                 {
                     diContainer.appsManager.open(app: app)
                     shortcutTriggerDate = nil
+                    produceLaunchHapticFeedbackIfNeeded()
                 }
             }
         }.opacity(showOnMouseMove && isHidden ? 0 : 1).overlay {
@@ -45,8 +46,15 @@ struct CommanderView: View {
 
     @State private var shortcutTriggerDate: Date?
     @AppStorage(AppStorageKey.showOnMouseMove) private var showOnMouseMove = true
+    @AppStorage(AppStorageKey.hapticFeedbackEnabled) private var hapticFeedbackEnabled = true
     private let diContainer = DIContainer.shared
     @State private var hoverState = WheelPicker.HoverState.enabledEmpty
     @State private var isHidden = true
     private let clearHoverSubject = PassthroughSubject<Void, Never>()
+
+    private func produceLaunchHapticFeedbackIfNeeded() {
+        if hapticFeedbackEnabled {
+            NSHapticFeedbackManager.defaultPerformer.perform(.levelChange, performanceTime: .default)
+        }
+    }
 }
