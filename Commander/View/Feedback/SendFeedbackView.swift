@@ -1,5 +1,6 @@
 import Combine
 import SwiftUI
+import Foundation
 
 struct SendFeedbackView: View {
     // MARK: Internal
@@ -86,13 +87,28 @@ struct SendFeedbackView: View {
     @State private var cancellables = Set<AnyCancellable>()
 
     private func sendFeedback(message: String, contactDetails: String) -> AnyPublisher<Void, URLError> {
-        let host = "https://wordpedia.app/"
-        var request = URLRequest(url: URL(string: host + "feedback")!)
+        guard let url = URL(string: "https://ethereal-expanse.com/api/chromex/feedback") else {
+            return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
+        }
+        
+        var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        let message = ("Commander App: " + message).addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        let contactDetails = contactDetails.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        request.httpBody = "feedback_text=\(message)&contact_details=\(contactDetails)".data(using: .utf8)
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        let params: [String: Any] = [
+            "message": message,
+            "email": contactDetails,
+            "app": "Commander",
+            "platform": "macOS",
+            "version": Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "unknown",
+            "systemVersion": ProcessInfo.processInfo.operatingSystemVersionString
+        ]
+        
+        guard let jsonData = try? JSONSerialization.data(withJSONObject: params) else {
+            return Fail(error: URLError(.cannotParseResponse)).eraseToAnyPublisher()
+        }
+        
+        request.httpBody = jsonData
 
         return URLSession.shared
             .dataTaskPublisher(for: request)
