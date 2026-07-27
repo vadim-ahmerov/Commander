@@ -87,21 +87,25 @@ struct SendFeedbackView: View {
     @State private var cancellables = Set<AnyCancellable>()
 
     private func sendFeedback(message: String, contactDetails: String) -> AnyPublisher<Void, URLError> {
-        guard let url = URL(string: "https://ethereal-expanse.com/api/chromex/feedback") else {
+        guard let url = URL(string: "https://api.bydev.app/api/feedback") else {
             return Fail(error: URLError(.badURL)).eraseToAnyPublisher()
         }
-        
+
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        
+
         let params: [String: Any] = [
-            "message": message,
-            "email": contactDetails,
-            "app": "Commander",
-            "platform": "macOS",
-            "version": Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "unknown",
-            "systemVersion": ProcessInfo.processInfo.operatingSystemVersionString
+            "api_key": "7b4e9f2a-8c3d-4e5f-9a1b-2c3d4e5f6a7b",
+            "email": "support@bydev.app",
+            "data": [
+                "message": message,
+                "contact_details": contactDetails,
+                "app": "Commander",
+                "platform": "macOS",
+                "version": Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "unknown",
+                "systemVersion": ProcessInfo.processInfo.operatingSystemVersionString
+            ]
         ]
         
         guard let jsonData = try? JSONSerialization.data(withJSONObject: params) else {
